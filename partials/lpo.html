@@ -1,0 +1,62 @@
+ <div class="navbar-more-overlay"></div>
+
+
+        <!-- /#sidebar-wrapper -->
+        <!-- /#sidebar-wrapper -->
+<div id="page-content-wrapper">
+           <div class="container">
+           <div class="row">
+                <div class="col-md-6 col-md-offset-3 text-center">
+                <img src="img/logo.jpg" />
+                </div>
+           </div>
+<div ng-controller="lpoCtrl"  style="margin-top:20px"> 
+<div class="row"> 
+  <div class="col-sm-6 col-lg-offset-3 col-xs-12">   
+  <h1 class="text-center">LPO</h1>
+  </div>
+</div>
+<div class="row"> 
+  <div class="col-sm-6 col-lg-offset-3 col-xs-12">      
+      <div class="input-group">
+            <input class="form-control"   ng-model="searchText" placeholder="Search by LPO Number OR Company Name" type="search" ng-change="searchlpo()" />
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-search"></span>
+             </span>
+      </div>
+    </div>
+     <div class="col-sm-3 col-xs-12">
+        <button class="green" ng-click="goToAddLpo()">ADD LPO</button>
+     </div> 
+</div>  
+  <table class="table  table-hover data-table sort display">
+     <thead>
+         <tr>        
+             <th class="lpo"> <a href="" ng-click="columnToOrder='lpo';reverse=!reverse"> LPO# </a> </th>
+             <th class="companyname"> <a href="" ng-click="columnToOrder='companyname';reverse=!reverse"> Company Name </a> </th>
+             <th class="shirts"> <a href="" ng-click="columnToOrder='shirts';reverse=!reverse"> Shirts </a> </th>
+             <th class="trousers"> <a href="" ng-click="columnToOrder='trousers';reverse=!reverse"> Trousers </a> </th>
+             <th class="jackets"> <a href="" ng-click="columnToOrder='jackets';reverse=!reverse"> Jacket </a> </th>
+             <th class="others"> <a href="" ng-click="columnToOrder='others';reverse=!reverse">Others </a> </th>  
+             <th class="lpototal">   <a href="" ng-click="columnToOrder='lpototal';reverse=!reverse">Total </a> </th>         
+         </tr>
+     </thead> 
+     <tbody>
+         
+         <tr ng-repeat="item in filteredList | orderBy:columnToOrder:reverse">
+             <td>{{item.lponum}}</td>
+             <td>{{item.companyname}}</td>
+             <td>{{item.shirts}}</td>
+             <td>{{item.trousers}}</td>
+             <td>{{item.jackets}}</td>
+             <td>{{item.others}}</td>
+             <td>{{item.total}}</td>           
+          
+             <td><a href="#!/editlpo/{{item.id}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+             <td ng-click="doDellpo(item.id)"><i class="fa fa-trash-o" aria-hidden="true"></i></td>
+         </tr>
+     </tbody>
+  </table>        
+</div> <!-- Ends Controller -->
+</div>
+</div>

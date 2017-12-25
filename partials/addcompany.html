@@ -1,0 +1,60 @@
+ <div class="navbar-more-overlay"></div>
+    
+        <!-- /#sidebar-wrapper --><div id="page-content-wrapper">
+           <div class="container">
+           <div class="row">
+                <div class="col-md-6 col-md-offset-3 text-center">
+                <img src="img/logo.jpg" />
+                </div>
+           </div>   
+<div class="page-content">
+    <div class="row">
+        <div class="space-6"></div>
+        <div class="col-sm-6 col-sm-offset-1">
+            <div id="login-box" class="login-box visible widget-box no-border">
+                <div class="widget-body">
+                    <div class="widget-main">
+                        <h4 class="header blue lighter bigger">
+                          Add Company
+                        </h4>
+                        <br/>
+                        <form name="companyForm" class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label no-padding-right" for="username">Company Name</label>
+                                <div class="col-sm-7">
+                                    <span class="block input-icon input-icon-right">
+                                        <input type="text" class="form-control" placeholder="Company name" name="companyname" ng-model="company.companyname" focus/>
+                                        <span ng-show="companyForm.email.$error.companyname" class="help-inline">Company Name is not valid</span> 
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label no-padding-right" for="password">Address</label>
+                                <div class="col-sm-7">
+                                    <span class="block input-icon input-icon-right">
+                                    <input type="text" class="form-control" name = "companyaddress" placeholder="Address" ng-model="company.companyaddress" required/>
+                                    <small class="errorMessage" data-ng-show="companyForm.password.$dirty && companyForm.password.$invalid"> Enter Address.</small>
+                                     </span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <span class="lbl col-sm-5"> </span>
+                                <div class="col-sm-7">
+                                   <button type="submit" class="width-35 pull-right btn btn-sm btn-primary" ng-click="doAddcompany(company)" data-ng-disabled="companyForm.$invalid">
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
+                            </fieldset>
+                           
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- /.page-content -->

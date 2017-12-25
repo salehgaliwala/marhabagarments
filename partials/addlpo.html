@@ -1,0 +1,160 @@
+ <div class="navbar-more-overlay"></div>
+    
+        <!-- /#sidebar-wrapper --><div id="page-content-wrapper">
+           <div class="container">
+           <div class="row">
+                <div class="col-md-6 col-md-offset-3 text-center">
+                <img src="img/logo.jpg" />
+                </div>
+           </div>   
+<div class="page-content">
+    <div class="row">
+        <div class="space-6"></div>
+        <div class="col-sm-6 col-sm-offset-1">
+            <div id="login-box" class="login-box visible widget-box no-border">
+                <div class="widget-body">
+                    <div class="widget-main">
+                        <h4 class="header blue lighter bigger">
+                          Add LPO with qty against each item
+                        </h4>
+                        <br/>
+                        <form name="lpoForm" class="form-horizontal" role="form">
+                        <div class="form-group">
+                                <label class="col-sm-5 control-label no-padding-right" for="lponumber">LPO Number</label>
+                                <div class="col-sm-7">
+                                    <span class="block input-icon input-icon-right">
+                                        <input type="text" class="form-control" placeholder="LPO Number" name="lponumber" ng-model="lpo.lponum" focus/>
+                                       
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label no-padding-right" for="companyname">Company Name</label>
+                                <div class="col-sm-7">
+                                    <span class="block input-icon input-icon-right">
+                                        <select ng-model="lpo.companyid" class="form-control" ng-click=loadcompany()>
+                                        <option value="" disabled selected> Select Company </option>                                                
+                                         <option ng-repeat="x in companies" value="{{x.companyid}}">{{x.companyname}}</option>
+                                    </select>   
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label no-padding-right" for="shirts">Shirts</label>
+                                <div class="col-sm-7">
+                                    <span class="block input-icon input-icon-right">
+                                        <input type="text" class="form-control" placeholder="Shirts" name="lponumber" ng-model="lpo.shirts" focus/>                                         
+                                    </span>
+                                </div>
+                            </div>                            
+                          
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label no-padding-right" for="trousers">Trousers</label>
+                                <div class="col-sm-7">
+                                    <span class="block input-icon input-icon-right">
+                                        <input type="text" class="form-control" placeholder="trousers" name="trousers" ng-model="lpo.trousers" focus/>                                         
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label no-padding-right" for="jackets">Jackets</label>
+                                <div class="col-sm-7">
+                                    <span class="block input-icon input-icon-right">
+                                        <input type="text" class="form-control" placeholder="jackets" name="jackets" ng-model="lpo.jackets" focus/>                                         
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label no-padding-right" for="ties">Tie</label>
+                                <div class="col-sm-7">
+                                    <span class="block input-icon input-icon-right">
+                                        <input type="text" class="form-control" placeholder="ties" name="tie" ng-model="lpo.tie" focus/>                                         
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label no-padding-right" for="scarf">scarf</label>
+                                <div class="col-sm-7">
+                                    <span class="block input-icon input-icon-right">
+                                        <input type="text" class="form-control" placeholder="scarf" name="scarf" ng-model="lpo.scarf" focus/>                                         
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label no-padding-right" for="Waist Coat">Waist Coat</label>
+                                <div class="col-sm-7">
+                                    <span class="block input-icon input-icon-right">
+                                        <input type="text" class="form-control" placeholder="Waist Coat" name="waist_coat" ng-model="lpo.waist_coat" focus/>                                         
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label no-padding-right" for="apron">Apron</label>
+                                <div class="col-sm-7">
+                                    <span class="block input-icon input-icon-right">
+                                        <input type="text" class="form-control" placeholder="Apron" name="apron" ng-model="lpo.apron" focus/>                                         
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label no-padding-right" for="coverall">Coveralls</label>
+                                <div class="col-sm-7">
+                                    <span class="block input-icon input-icon-right">
+                                        <input type="text" class="form-control" placeholder="coverall" name="coverall" ng-model="lpo.coverall" focus/>                                         
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label no-padding-right" for="tshirt">tshirt</label>
+                                <div class="col-sm-7">
+                                    <span class="block input-icon input-icon-right">
+                                        <input type="text" class="form-control" placeholder="tshirt" name="tshirt" ng-model="lpo.tshirt" focus/>                                         
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label no-padding-right" for="cargo_trouser">Cargo trouser</label>
+                                <div class="col-sm-7">
+                                    <span class="block input-icon input-icon-right">
+                                        <input type="text" class="form-control" placeholder="cargo_trouser" name="cargo_trouser" ng-model="lpo.cargo_trouser" focus/>                                         
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label no-padding-right" for="drcoat">Dr Coat</label>
+                                <div class="col-sm-7">
+                                    <span class="block input-icon input-icon-right">
+                                        <input type="text" class="form-control" placeholder="drcoat" name="drcoat" ng-model="lpo.drcoat" focus/>                                         
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-5 control-label no-padding-right" for="username">Others</label>
+                                <div class="col-sm-7">
+                                    <span class="block input-icon input-icon-right">
+                                        <input type="text" class="form-control" placeholder="Others" name="others" ng-model="lpo.others" focus/>                                         
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <span class="lbl col-sm-5"> </span>
+                                <div class="col-sm-7">
+                                   <button type="submit" class="width-35 pull-right btn btn-sm btn-primary" ng-click="doAddLpo(lpo)" data-ng-disabled="lpoForm.$invalid">
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
+                            </fieldset>
+                           
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- /.page-content -->

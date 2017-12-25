@@ -1,0 +1,63 @@
+ <div class="navbar-more-overlay"></div>
+    
+        <!-- /#sidebar-wrapper -->
+        <!-- /#sidebar-wrapper -->
+<div id="page-content-wrapper">
+           <div class="container">
+	           <div class="row">
+	                <div class="col-md-6 col-md-offset-3 text-center">
+	                	<img src="img/logo.jpg" />
+	                </div>
+	           </div>
+<form action="/printdo.php" method="post" target="_blank" novalidate>           
+<div ng-controller="TableDojobsCtrl" style="margin-top: 40px"> 
+<div class="row"> 
+  <div class="col-sm-6 col-lg-offset-3 col-xs-12">     
+      
+            <div class="form-group" ng-controller="companycrtl" >
+                <select ng-model="$parent.searchText" class="form-control" ng-change="search()">
+                	 <option value="">Select Company</option>	
+                     <option ng-repeat="x in companies" value="{{x.companyname}}">{{x.companyname}}</option>
+                </select>   
+     
+            </div>
+            
+  
+    </div>
+     <div class="col-sm-3 col-xs-12">
+        <button class="green" ng-click="goToAddJob()">ADD JOB</button>
+     </div> 
+</div>  
+  <table class="table  table-hover data-table sort display">
+     <thead>
+         <tr><th>&nbsp;</th>
+             <th class="JobId"> <a href="" ng-click="columnToOrder='jobid';reverse=!reverse">JobId          
+                 </a></th>
+             <th class="name"> <a href="" ng-click="columnToOrder='company';reverse=!reverse"> Company </a> </th>
+             <th class="Email"> <a href="" ng-click="columnToOrder='name';reverse=!reverse"> Name </a> </th>
+             <th>Status</th>
+             <th>&nbsp;</th>
+         </tr>
+     </thead> 
+     <tbody>
+      
+         <tr ng-repeat="item in filteredList | orderBy:columnToOrder:reverse">
+            <td><input type="checkbox" name="printdo[]" value="{{item.jobid}}"/></td>
+             <td>{{item.jobid}}</td>
+             <td>{{item.companyname}}</td>
+             <td>{{item.name}}</td>
+              <td >{{item.status}}</td>
+             <td><a href="#!/editjob/{{item.jobid}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+             <td ng-click="doDeljob(item.jobid)"><i class="fa fa-trash-o" aria-hidden="true"></i></td>
+         </tr>
+        
+       
+     </tbody>
+  </table>     
+  <table>
+   <tr><td colspan="7"><button type="submit" class="btn-primary">Print Delivery Orders</button></td></tr>
+   </table>
+    </form>   
+</div> <!-- Ends Controller -->
+</div>
+</div>

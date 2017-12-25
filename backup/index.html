@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+     <title>Marhaba Work Managment App</title>
+    <link href="fonts/font-awesome.min" rel="stylesheet">
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/simple-sidebar.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<!-- The #page-top ID is part of the scrolling feature - the data-spy and data-target are part of the built-in Bootstrap scrollspy function -->
+
+<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">Marhaba</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">       
+                <li class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reports <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                  <li><a href="#!/dojobs">Generate Delivery Orders</a></li>
+                    <li><a href="#!/employeeJobReport">User Job Report</a></li>
+                    
+                  </ul>
+                </li>
+              </ul>      
+              <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Jobs <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                  <li><a href="/#!/queue">Job Queue</a></li>
+                    <li><a href="/#!/job">View Jobs</a></li>
+                               
+                  </ul>
+                </li>
+                <li><a href="/#!/users">User</a></li>
+                <li><a href="/#!/companies">Client</a></li>
+
+              </ul>
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+        </nav>
+
+    <!-- Intro Section -->
+    <section id="intro" class="intro-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                     <div data-ng-view="" id="ng-view" class="slide-animation"></div>  
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                  <toaster-container toaster-options="{'time-out': 3000}"></toaster-container>
+                </div>
+            </div>
+        </div>
+    </section>
+
+ <!-- /#wrapper -->
+    <script src="js/jquery.js"></script>
+    <script>$.noConflict();</script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    
+    <script src="https://code.angularjs.org/1.6.3/angular.min.js"></script>
+      <script src="js/underscore.js"></script>
+      <script src="https://code.angularjs.org/1.6.3/angular-route.min.js"></script>
+      <script src="https://code.angularjs.org/1.6.3/angular-animate.js" ></script>
+      <script src="js/toaster.js"></script>
+      <script src="app/app.js"></script>
+      <script src="app/data.js"></script>
+      <script src="app/directives.js"></script>
+      <script src="app/authCtrl.js"></script>
+      <script src="app/TableCrtl.js"></script>
+      <script src="app/UserTableCrtl.js"></script>
+      <script src="app/jobCrtl.js"></script>
+      <script src="app/reportcrtl.js"></script>
+      <script src="app/UserCrtl.js"></script>
+      <script src="app/CompanyTableCrtl.js"></script>
+      <script src="app/CompanyCrtl.js"></script>
+      <script src="app/QueueCrtl.js"></script>
+      <script src="app/TableDoJobsCrtl.js"></script> 
+       <script src="app/JobAssignCrtl.js"></script> 
+      <script src="js/custom.js"></script>
+    <!-- Menu Toggle Script -->
+    
+
+</body>
+
+</html>

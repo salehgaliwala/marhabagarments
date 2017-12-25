@@ -1,0 +1,291 @@
+ <div class="navbar-more-overlay"></div>
+   
+        <!-- /#sidebar-wrapper -->
+<div id="page-content-wrapper">
+           <div class="container">
+           <div class="row">
+                <div class="col-md-12 text-center">
+                <img src="img/logo.jpg" />
+                </div>
+           </div>
+           <div class="row">
+            <div class="col-md-12">
+          
+            </div>
+           </div> 
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-login" ng-controller='EditJobControler'>
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <a href="#" class="active" id="login-form-link">Edit Jobs</a>
+                                  <p>{{messages}}</p> 
+                            </div>
+                            
+                        </div>
+                        <hr>
+                    </div>
+                    <div class="panel-body">
+                    <form name="editJobForm" id="editJob" role="form" ng-repeat="editJob in editJobs" novalidate>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                
+                                  <div class="form-group">  
+                                         <input type="text" name="eid" id="eid" tabindex="1" class="form-control" placeholder="Employee ID" value="{{editJob.eid}}" ng-model="editJob.eid" required>
+                                             <span class="error-message" ng-show="editJobForm.eid.$dirty && editJobForm.eid.$error.required">Please enter Employee ID</span>
+                                  </div>  
+                               
+                                     <div class="form-group">
+                                         <input type="text" name="name" id="name" tabindex="1" class="form-control" placeholder="Name" value="{{editJob.name}}" ng-model="editJob.name" required>
+                                             <span class="error-message" ng-show="editJobForm.name.$dirty && editJobForm.name.$error.required">Please enter name</span>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                             <input type="text" name="location" id="location" tabindex="1" class="form-control" placeholder="location" value="{{editJob.location}}" ng-model="editJob.location" required>
+                                                 <span class="error-message" ng-show="editJobForm.location.$dirty && editJobForm.location.$error.required">Please enter location</span>
+                                            </div> 
+                                        </div>     
+                                         <div class="col-sm-6" >
+                                           <div class="form-group">
+                                            <input type="text" name="do" id="do" tabindex="1" class="form-control" placeholder="Enter DO" value="{{editJob.do}}" ng-model="editJob.do" required>
+                                                 <span class="error-message" ng-show="editJobForm.eid.$dirty && editJobForm.do.$error.required">Please enter Employee ID</span>
+                                            </div>     
+                                         </div>    
+                                    </div>     
+                                                             
+                            </div>
+                            <div class="col-sm-6"> 
+                                    <div class="form-group">
+                                     <input type="text" name="po" id="po" tabindex="1" class="form-control" placeholder="LPO" value="" ng-model="editJob.po" required>
+                                         <span class="error-message" ng-show="editJobForm.po.$dirty && editJobForm.po.$error.required">Please enter PO</span>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6"> 
+                                            <div class="form-group">                                        
+                                                <select name="gender" ng-model="editJob.gender" class="form-control">
+                                                    <option value="" disabled>Select Gender</option>
+                                                    <option value="M" selected="selected">Male</option>
+                                                    <option value="F">Female</option>
+                                                </select>
+                                            </div>
+                                         </div>
+                                         <div class="col-sm-6" ng-controller="companycrtl"> 
+                                            <div class="form-group" >
+                                                <select ng-model="editJob.company" class="form-control" ng-change="populatejobtypes(editJob.company)">
+                                                     <option ng-repeat="x in companies" value="{{x.companyid}}">{{x.companyname}}</option>
+                                                </select>   
+                                             </div>    
+                                         </div>
+                                    </div>     
+                                    <div class="row">
+                                              <div class="col-sm-6"> 
+                                                    <div class="form-group">
+                                                     <select ng-model="editJob.jobtype" name="jobtype" class="form-control" required> 
+                                                            <option ng-repeat="x in jobtypes" value="{{x.jobtypeid}}">{{x.jobtypename}}</option>
+                                                         </select>   
+                                                          <span class="error-message" ng-show="editJobForm.jobtype.$dirty && editJobForm.jobtype.$error.required">Please enter uniform type</span>
+                                                    
+                                                    </div>
+
+                                              </div>
+                                              <div class="col-sm-6" >
+                                                   <div class="form-group">
+                                                    <input type="text" name="inv" id="inv" tabindex="1" class="form-control" placeholder="Enter Invoice" value="{{editJob.inv}}" ng-model="editJob.inv" required>
+                                                         <span class="error-message" ng-show="editJobForm.inv.$dirty && editJobForm.inv.$error.required">Enter Invoice</span>
+                                                    </div>     
+                                              </div>   
+                                     </div>       
+                                 
+                                    <input type="hidden" name="jobid" id="jobid" value="{{editJob.jobid}}" ng-model="editJob.jobid" />
+                                                                    
+                                                             
+                            </div>
+                        </div>
+                        <div class="divider"></div>
+                         <div class="divider"></div>
+                        <div class="row">
+                            <div class="col-sm-12"><p><strong>Select Uniform Type<strong></p></div>
+                        </div>  
+                        <div class="row">
+                            <div class="col-sm-4 ">
+                                 <div class="row">
+                                       <div class="col-sm-6">
+                                        <select name="dressid" ng-model="editJob.dressid1" class="form-control">
+                                                <option value="1" selected>Shirt</option>
+                                                <option value="4">T-Shirt</option>
+                                            </select>          
+                                       
+                                       </div> 
+                                        <div class="col-sm-6">
+                                         <div class="form-group">  <input type="text" name="qty[1]" placeholder="Qty" class="form-control" value="{{editJob.qty1}}" ng-model="editJob.qty1">
+                                           <input type="hidden" value={{editJob.jobitemid1}} name="jobitemid" ng-model="editJob.jobitemsid1"> 
+                                            <input type="hidden" value={{editJob.jobitemid2}} name="jobitemid" ng-model="editJob.jobitemsid2"> 
+                                             <input type="hidden" value={{editJob.jobitemid3}} name="jobitemid" ng-model="editJob.jobitemsid3"> 
+                                         </div>
+                                       </div> 
+                                 </div>
+                                 <div class="row vertical-divider">
+                                       <div class="col-sm-4">
+                                            <div class="form-group">  
+                                                <label>(1) L: </label><input type="text" name="measure[1][1]" class="form-control" value="{{editJob.item1.s1}}" ng-model="editJob.item1.s1">
+                                             </div>
+                                             <div class="form-group">  
+                                                <label>(2) SH:  </label>
+                                                 <input type="text" name="measure[1][2]" class="form-control" value="{{editJob.item1.s2}}" ng-model="editJob.item1.s2">
+                                             </div>
+                                             <div class="form-group">  
+                                                <label>(3) C:  </label>
+                                                 <input type="text" name="measure[1][3]" class="form-control" value="{{editJob.item1.s3}}" ng-model="editJob.item1.s3">
+                                             </div>
+                                       </div>
+                                       <div class="col-sm-4">
+                                            <div class="form-group">  
+                                                <label>(4) W: </label>
+                                                 <input type="text" name="measure[1][4]" class="form-control" value="{{editJob.item1.s4}}" ng-model="editJob.item1.s4">
+                                             </div>
+                                             <div class="form-group">  
+                                                <label>(5) H:  </label>
+                                                 <input type="text" name="measure[1][5]" class="form-control" value="{{editJob.item1.s4}}" ng-model="editJob.item1.s5">
+                                             </div>
+                                             <div class="form-group">  
+                                                <label>(6) S/L:  </label>
+                                                 <input type="text" name="measure[1][6]" class="form-control" value="{{editJob.item1.s6}}" ng-model="editJob.item1.s6">
+                                             </div>
+                                        
+                                       </div>
+                                       <div class="col-sm-4">
+                                            <div class="form-group">  
+                                                <label>(7) N: </label>
+                                                 <input type="text" name="measure[1][7]" class="form-control" value="{{editJob.item1.s7}}" ng-model="editJob.item1.s7">
+                                             </div>
+                                             <div class="form-group">  
+                                                <label>(8) CF:  </label>
+                                                 <input type="text" name="measure[1][8]" class="form-control" value="{{editJob.item1.s8}}" ng-model="editJob.item1.s8">
+                                             </div>
+                                       </div>
+                                 </div>      
+                                 
+                            </div>
+                            <div class="col-sm-4">
+                                 <div class="row">
+                                       <div class="col-sm-6">
+                                        <select name="dressid" ng-model="editJob.dressid2" class="form-control">                                                
+                                                <option value="2" selected>Trouser</option>
+                                                <option value="5">Skirt</option>
+                                            </select>                                             
+                                       </div> 
+                                       <div class="col-sm-6">
+                                         <div class="form-group">  <input type="text" name="qty[2]" value="{{editJob.qty2}}"placeholder="Qty" class="form-control" value="" ng-model="editJob.qty2"></div>
+                                       </div> 
+                                 </div>
+                                 <div class="row vertical-divider">
+                                       <div class="col-sm-4">
+                                            <div class="form-group">  
+                                                <label>(1) L: </label><input type="text" name="eid" class="form-control" value="{{editJob.item2.s1}}" ng-model="editJob.item2.s1">
+                                             </div>
+                                             <div class="form-group">  
+                                                <label>(2) W:  </label>
+                                                 <input type="text" name="eid" class="form-control" value="{{editJob.item2.s2}}" ng-model="editJob.item2.s2">
+                                             </div>
+                                             <div class="form-group">  
+                                                <label>(3) H:  </label>
+                                                 <input type="text" name="eid" class="form-control" value="{{editJob.item2.s5}}" ng-model="editJob.item2.s5">
+                                             </div>
+                                       </div>
+                                       <div class="col-sm-4">
+                                            <div class="form-group">  
+                                                <label>(4) T: </label>
+                                                 <input type="text" name="eid" class="form-control" value="{{editJob.item2.s9}}" ng-model="editJob.item2.s9">
+                                             </div>
+                                             <div class="form-group">  
+                                                <label>(5) U:  </label>
+                                                 <input type="text" name="eid" class="form-control" value="{{editJob.item2.s14}}" ng-model="editJob.item2.s14">
+                                             </div>
+                                             <div class="form-group">  
+                                                <label>(6) K:  </label>
+                                                 <input type="text" name="eid" class="form-control" value="{{editJob.item2.s10}}" ng-model="editJob.item2.s10">
+                                             </div>
+                                        
+                                       </div>
+                                       <div class="col-sm-4">
+                                            <div class="form-group">  
+                                                <label>(7) B: </label>
+                                                 <input type="text" name="eid" class="form-control" value="{{editJob.item2.s11}}" ng-model="editJob.item2.s11">
+                                             </div>
+                                             
+                                       </div>
+                                 </div>      
+                             </div> 
+                             <div class="col-sm-4">
+                                    <div class="row">
+                                       <div class="col-sm-6">
+                                         <select name="dressid" ng-model="editJob.dressid3" class="form-control">                                                
+                                                <option value="3" selected>Jacket</option>
+                                                <option value="6">Coat</option>
+                                            </select>    
+                                       </div> 
+                                       <div class="col-sm-6">
+                                         <div class="form-group">  <input type="text" name="qty[3]" placeholder="Qty" class="form-control" value="{{editJob.qty3}}" ng-model="editJob.qty3"></div>
+                                       </div> 
+                                 </div>
+                                 <div class="row vertical-divider">
+                                       <div class="col-sm-4">
+                                            <div class="form-group">  
+                                                <label>(1) L: </label><input type="text" name="eid" class="form-control" value="{{editJob.item3.s1}}" ng-model="editJob.item3.s1">
+                                             </div>
+                                             <div class="form-group">  
+                                                <label>(2) SH:  </label>
+                                                 <input type="text" name="eid" class="form-control" value="{{editJob.item3.s2}}" ng-model="editJob.item3.s2">
+                                             </div>
+                                             <div class="form-group">  
+                                                <label>(3) C:  </label>
+                                                 <input type="text" name="eid" class="form-control" value="{{editJob.item3.s3}}" ng-model="editJob.item3.s3">
+                                             </div>
+                                       </div>
+                                       <div class="col-sm-4">
+                                            <div class="form-group">  
+                                                <label>(4) W: </label>
+                                                 <input type="text" name="eid" class="form-control" value="{{editJob.item3.s4}}" ng-model="editJob.item3.s4">
+                                             </div>
+                                             <div class="form-group">  
+                                                <label>(5) H:  </label>
+                                                 <input type="text" name="eid" class="form-control" value="{{editJob.item3.s5}}" ng-model="editJob.item3.s5">
+                                             </div>
+                                             <div class="form-group">  
+                                                <label>(6) S/L:  </label>
+                                                 <input type="text" name="eid" class="form-control" value="{{editJob.item3.s6}}" ng-model="editJob.item3.s6">
+                                             </div>
+                                        
+                                       </div>
+                                       <div class="col-sm-4">
+                                            <div class="form-group">  
+                                                <label>(7) B/L/OP: </label>
+                                                 <input type="text" name="eid" class="form-control" value="{{editJob.item3.s12}}" ng-model="editJob.item3.s12">
+                                             </div>
+                                             <div class="form-group">  
+                                                <label>(8) Arm:  </label>
+                                                 <input type="text" name="eid" class="form-control" value="{{editJob.item3.s13}}" ng-model="editJob.item3.s13">
+                                             </div>
+                                       </div>
+                                 </div>      
+                                 
+                             </div>   
+                             
+                        </div> 
+                        <div class="divider"></div>
+
+                        <div class="row">
+                           <div class="col-sm-4 col-offset-sm-2">
+                            <button class="red" ng-click="doeditJob(editJob)">UPDATE</button>
+                           </div> 
+                        </div> 
+                      </form>         
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+        <!-- /#page-content-wrapper -->

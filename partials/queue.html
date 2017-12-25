@@ -1,0 +1,67 @@
+<div class="navbar-more-overlay"></div>
+    
+        <!-- /#sidebar-wrapper -->
+        <!-- /#sidebar-wrapper -->
+<div id="page-content-wrapper">
+           <div class="container">
+           <div class="row">
+                <div class="col-md-6 col-md-offset-3 text-center">
+                <img src="img/logo.jpg" />
+                </div>
+           </div>
+<div ng-controller="QueueCtrl" style="margin-top:40px"> 
+<div class="row"> 
+  <div class="col-sm-6 col-lg-offset-3 col-xs-12">      
+      <div class="input-group">
+            <input class="form-control"   ng-model="queuesearchText" placeholder="Search" type="search" ng-change="queuesearch()" />
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-search"></span>
+             </span>
+      </div>
+    </div>
+     <div class="col-sm-3 col-xs-12">
+        <button class="green" ng-click="goToAddJob()">ADD JOB</button>
+     </div> 
+</div>  
+  <table class="table  table-hover data-table sort display">
+     <thead>
+         <tr>
+             <th class="JobId"> <a href="" ng-click="columnToOrder='jobitemid';reverse=!reverse">Job Items         
+                 </a></th>
+             <th class="name"> <a href="" ng-click="columnToOrder='companyname';reverse=!reverse"> Company </a> </th>
+             <th class="Email"> <a href="" ng-click="columnToOrder='name';reverse=!reverse"> Name </a> </th>                 
+             <th>Type</th>
+             <th>Dress</th>
+             <th>Qty</th>
+             <th>Assign to </th>            
+          
+             <th>Status</th>
+                <th>&nbsp;</th>
+         </tr>
+     </thead> 
+     <tbody>
+         
+         <tr ng-repeat="item in filteredList | orderBy:columnToOrder:reverse">
+             <td>{{item.jobitemid}}</td>
+             <td>{{item.companyname}}</td>
+             <td>{{item.name}}</td>
+              <td>{{item.jobtype}}</td>
+             <td>{{item.dressname}}</td>
+             <td>{{item.qty}}</td>
+             <td ng-controller="usercrtl"> <select class="form-control" ng-model="item.assignto" ng-change="setAssignto(item.assignto,item.jobitemid)" >
+                                         <option ng-repeat="x in users" value="{{x.uid}}">{{x.username}}</option>
+                                    </select></td>
+             <td ng-controller="queuestatuscrtl"><select class="form-control" ng-model="item.status" ng-change="setItemStatus(item.status,item.jobitemid)" >
+                                 
+                                           <option value="Pending">Pending</option>
+                                           <option value="Processing">Processing</option>
+                                           <option value="Complete">Complete</option>
+                                      
+                                    </select></td>                       
+             <td><button type="button" class="btn btn-success">Print</button></td>
+         </tr>
+     </tbody>
+  </table>        
+</div> <!-- Ends Controller -->
+</div>
+</div>
