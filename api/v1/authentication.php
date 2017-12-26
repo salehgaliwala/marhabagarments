@@ -127,10 +127,10 @@ $app->get('/companies', function(){
     echoResponse(200, $response);
 });  
 
-$app->get('/lpos', function(){
+$app->get('/lpos/:companyid', function($comapnyid){
     $db = new DbHandler();
     $response = array();
-    $response=$db->getAllLPO(); 
+    $response=$db->getAllLPO($comapnyid); 
     echoResponse(200, $response);
 });  
 $app->get('/jobtypes', function(){
@@ -147,6 +147,23 @@ $app->get('/populatejobtypes/:id', function($comapnyid){
   $db = new DbHandler();
         $response = array();
         $response=$db->getAllRecord("SELECT * from jobtype where jobtypeid='$comapnyid'"); 
+         echoResponse(200, $response);
+});
+
+// Load the LPO for edit job
+$app->get('/populatelpobynum/:lponum', function($lponum){
+
+  $db = new DbHandler();
+        $response = array();
+        $response=$db->getAllRecord("SELECT * from lpo where lponum='$lponum'"); 
+         echoResponse(200, $response);
+});
+// Populate Job type by name
+$app->get('/populatejobtypesbyid/:jobtypeid', function($jobtypeid){
+
+  $db = new DbHandler();
+        $response = array();
+        $response=$db->getAllRecord("SELECT * from jobtype where jobtypeid='$jobtypeid'"); 
          echoResponse(200, $response);
 });
 
@@ -214,9 +231,11 @@ if ($result != NULL) {
 $app->post('/addlpo', function() use ($app) {
 $r = json_decode($app->request->getBody());
 verifyRequiredParams(array('lponum'),$r->lpo);
+
  session_start();
 $response = array();
 $db = new DbHandler();
+$db->ifrecordexist('lponum',$r->lpo->lponum,'lpo','companyid', $r->lpo->companyid); 
 $tabble_name = "lpo";
 $column_names = array('lponum', 'companyid', 'shirts' , 'trousers' , 'jackets' , 'tie' , 'scarf', 'waist_coat', 'apron' , 'coverall' , 'tshirt', 'cargo_trouser', 'drcoat', 'others' );
 
@@ -489,6 +508,13 @@ $app->get('/editjob/:id', function($jobid){
 
                 }
               
+            }
+            if($responsejobitem['dressid'] == 7 or $responsejobitem['dressid'] == 8 || $responsejobitem['dressid'] == 9 || $responsejobitem['dressid'] == 10)
+            {
+                 $temp['qty4']  = $responsejobitem['qty'];
+                 $temp['others'] = $responsejobitem['dressid'];
+                 $jobitemsid = $responsejobitem['jobitemid']; 
+                 $temp['jobitemsid4'] = $jobitemsid;   
             }    
 
         }
@@ -537,12 +563,18 @@ if(!empty($r->customer->jobitemsid2))
 $response=$db->DelRecord("Update jobitems SET dressid = '".$r->customer->dressid2."' where jobitemid = '".$r->customer->jobitemsid2."'"); 
 if(!empty($r->customer->jobitemsid3))
 $response=$db->DelRecord("Update jobitems SET dressid = '".$r->customer->dressid3."' where jobitemid = '".$r->customer->jobitemsid3."'");
+if(!empty($r->customer->jobitemsid4))
+$response=$db->DelRecord("Update jobitems SET dressid = '".$r->customer->others."' where jobitemid = '".$r->customer->jobitemsid4."'");
 if(!empty($r->customer->jobitemsid1))
 $response=$db->DelRecord("Update jobitems SET qty = '".$r->customer->qty1."' where jobitemid = '".$r->customer->jobitemsid1."'"); 
 if(!empty($r->customer->jobitemsid2))
 $response=$db->DelRecord("Update jobitems SET qty  = '".$r->customer->qty2."' where jobitemid = '".$r->customer->jobitemsid2."'"); 
 if(!empty($r->customer->jobitemsid3))
 $response=$db->DelRecord("Update jobitems SET qty   = '".$r->customer->qty3."' where jobitemid = '".$r->customer->jobitemsid3."'");
+if(!empty($r->customer->jobitemsid4))
+    $response=$db->DelRecord("Update jobitems SET qty   = '".$r->customer->qty4."' where jobitemid = '".$r->customer->jobitemsid4."'");
+
+
 if(!empty($r->customer->jobitemsid1))
 {
     foreach ($r->customer->item1 as $key => $value) {
@@ -639,7 +671,7 @@ if($r->customer->qty3 != '')
  $column_names = array('jobid', 'dressid', 'qty'); 
  $r->customer->dressid = $r->customer->dressid3;
  $r->customer->qty = $r->customer->qty3;
-$result = $db->insertIntoTable($r->customer, $column_names, $tabble_name);  
+ $result = $db->insertIntoTable($r->customer, $column_names, $tabble_name);  
  $tabble_name = "jobitemsmeasurements";
  $column_names = array('jobitemsid', 'measurementid', 'value');
  $r->customer->jobitemsid =  $result;
@@ -652,6 +684,15 @@ $result = $db->insertIntoTable($r->customer, $column_names, $tabble_name);
 
 
 }
+
+if($r->customer->qty4 != '')
+{
+ $tabble_name = "jobitems";
+ $column_names = array('jobid', 'dressid', 'qty'); 
+ $r->customer->dressid = $r->customer->others;
+ $r->customer->qty = $r->customer->qty4;
+ $result = $db->insertIntoTable($r->customer, $column_names, $tabble_name);       
+}    
     
 if ($result != NULL) {
             $response["status"] = "success";

@@ -59,7 +59,8 @@ app.controller('authCtrl', function ($scope, $rootScope, $routeParams, $location
             $location.path('addjobtype');
       };
      $scope.doAddjob = function (customer) {
-        //alert(JSON.stringify(customer));
+        //alert(JSON.stringify(customer));     
+
         Data.post('addjob', {
             customer: customer
         }).then(function (results) {
@@ -70,9 +71,49 @@ app.controller('authCtrl', function ($scope, $rootScope, $routeParams, $location
                 $scope.messages = 'Job Added';
                 alert("Job Created");
                // alert($scope.messages);
-                 $location.path('job');
+                // $location.path('job');
+                 $scope.addJob.eid = '';
+                 $scope.addJob.name = '';
+                 $scope.addJob.location = '';
+                 $scope.addJob.dressid1 = ''; 
+                 $scope.addJob.dressid2 = ''; 
+                 $scope.addJob.dressid3 = ''; 
+                 $scope.addJob.qty1 = '';
+                 $scope.addJob.qty2 = '';
+                 $scope.addJob.qty3 = '';
+                 $scope.addJob.item1.s1 = '';
+                 $scope.addJob.item1.s2 = '';
+                 $scope.addJob.item1.s3 = '';
+                 $scope.addJob.item1.s4 = '';
+                 $scope.addJob.item1.s5 = '';
+                 $scope.addJob.item1.s6 = '';
+                 $scope.addJob.item1.s7 = '';
+                 $scope.addJob.item1.s8 = '';
 
+                 $scope.addJob.item2.s1 = '';
+                 $scope.addJob.item2.s2 = '';
+                 $scope.addJob.item2.s5 = '';
+                 $scope.addJob.item2.s9 = '';
+                 $scope.addJob.item2.s14 = '';
+                 $scope.addJob.item2.s10 = '';
+                 $scope.addJob.item2.s11 = '';
+
+                 $scope.addJob.item3.s1 = '';
+                 $scope.addJob.item3.s2 = '';
+                 $scope.addJob.item3.s3 = '';
+                 $scope.addJob.item3.s4 = '';
+                 $scope.addJob.item3.s5 = '';
+                 $scope.addJob.item3.s6 = '';
+                 $scope.addJob.item3.s12 = '';
+                 $scope.addJob.item3.s13 = '';
+
+                 $scope.addJob.others = ''; 
+                 $scope.addJob.qty4 = ''; 
             }
+            else
+            {
+              $scope.messages = results.message;
+            }  
         });
     };
     
@@ -100,7 +141,7 @@ app.controller('authCtrl', function ($scope, $rootScope, $routeParams, $location
         }).then(function (results) {
           //  alert(JSON.stringify(results));
             Data.toast(results);
-            
+            //alert(results.message);
             if (results.status == "success") {
                 $scope.messages = 'LPO Added';
                // alert($scope.messages);

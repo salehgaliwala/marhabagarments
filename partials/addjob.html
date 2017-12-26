@@ -30,41 +30,35 @@
                             <div class="col-sm-6">
                               <form name="addJobForm" id="addjob" role="form">
                                      <div class="form-group">  
-                                     <input type="text" name="eid" id="eid" tabindex="5" class="form-control" placeholder="Employee ID" value="" ng-model="addJob.eid" required>
+                                     <input type="text" name="eid" id="eid" tabindex="1" class="form-control" placeholder="Employee ID" value="" ng-model="addJob.eid" required>
                                          <span class="error-message" ng-show="addJobForm.eid.$dirty && addJobForm.eid.$error.required">Please enter Employee ID</span>
                                     </div>
                                     
                                      <div class="form-group">
-                                         <input type="text" name="name" id="name" tabindex="1" class="form-control" placeholder="Name" value="" ng-model="addJob.name" required>
+                                         <input type="text" name="name" id="name" tabindex="2" class="form-control" placeholder="Name" value="" ng-model="addJob.name" required>
                                              <span class="error-message" ng-show="addJobForm.name.$pristine && addJobForm.name.$invalid">Please enter name</span>
                                     </div>
                                     <div class="form-group">
-                                     <input type="text" name="location" id="location" tabindex="2" class="form-control" placeholder="location" value="" ng-model="addJob.location" required>
+                                     <input type="text" name="location" id="location" tabindex="3" class="form-control" placeholder="location" value="" ng-model="addJob.location" required>
                                          <span class="error-message" ng-show="addJobForm.location.$dirty && addJobForm.location.$error.required">Please enter location</span>
                                     </div>  
 
 
                                                              
                             </div>
-                            <div class="col-sm-6"> 
-                                    <div class="form-group" ng-controller="lpocrtljob">
-                                      <select ng-model="addJob.po" class="form-control">
-                                        <option value="" disabled selected> Select LPO </option>                                                
-                                         <option ng-repeat="x in lpos" value="{{x.lponum}}">{{x.lponum}}</option>
-                                      </select>  
-                                    </div>
+                            <div class="col-sm-6">                                
                                     <div class="row">
                                         <div class="col-sm-6" ng-controller="companycrtl"> 
                                             <div class="form-group">
                                               
-                                                    <select ng-model="addJob.company" class="form-control" ng-change="populatejobtypes(addJob.company)">
+                                                    <select ng-model="addJob.company" class="form-control" ng-change="populatejobtypes(addJob.company)" tabindex="4">
                                                         <option value="" disabled selected> Select Company </option>                                                
                                                          <option ng-repeat="x in companies" value="{{x.companyid}}">{{x.companyname}}</option>
                                                     </select>   
                                          
                                              </div>
                                              <div class="form-group">
-                                                 <select ng-model="addJob.jobtype" class="form-control" required> 
+                                                 <select ng-model="addJob.jobtype" ng-click="populatejobtypes(addJob.company)" class="form-control" tabindex="5" required> 
                                                         <option value="" disabled selected> Select Job Types </option>
                                                         <option ng-repeat="x in jobtypes" value="{{x.jobtypeid}}">{{x.jobtypename}}</option>
                                                  </select>   
@@ -75,7 +69,7 @@
                                         <div class="col-sm-6"> 
                                             <div class="form-group"> 
                                                  <div class="form-group">                                        
-                                                <select name="gender" ng-model="addJob.gender" class="form-control">
+                                                <select name="gender" ng-model="addJob.gender" class="form-control" tabindex="6">
                                                     <option value="" disabled selected>Select Gender</option>
                                                     <option value="M" selected="selected">Male</option>
                                                     <option value="F">Female</option>
@@ -85,7 +79,12 @@
                                               </div>  
                                         </div>
                                     </div>         
-                                   
+                                    <div class="form-group" ng-controller="lpocrtljob">
+                                         <select ng-model="addJob.po" class="form-control" ng-click="populatelpos(addJob.company)" tabindex="7">
+                                              <option value="" disabled selected> Select LPO </option>
+                                              <option ng-repeat="x in lpos" value="{{x.lponum}}">{{x.lponum}}</option>
+                                      </select>  
+                                    </div>
                                    
                                                                     
                                                              
@@ -99,53 +98,53 @@
                             <div class="col-sm-4 ">
                                  <div class="row">
                                        <div class="col-sm-6">
-                                        <select name="dressid" ng-model="addJob.dressid1" ng-init="addJob.dressid1 = '0'" class="form-control">                                                
+                                        <select name="dressid" ng-model="addJob.dressid1" ng-init="addJob.dressid1 = '0'" class="form-control" tabindex="8">                                                
                                                 <option value="1" selected>Shirt</option>
                                                 <option value="4">T-Shirt</option>
                                             </select>                                       
                                        
                                        </div> 
                                         <div class="col-sm-6">
-                                         <div class="form-group">  <input type="text" name="qty[1]" placeholder="Qty" class="form-control" value="" ng-model="addJob.qty1" ng-init="addJob.qty1 = ''"></div>
+                                         <div class="form-group">  <input type="text" name="qty[1]" placeholder="Qty" class="form-control" value="" ng-model="addJob.qty1" ng-init="addJob.qty1 = ''" tabindex="9"></div>
                                        </div> 
                                  </div>
                                  <div class="row vertical-divider">
                                        <div class="col-sm-4">
                                             <div class="form-group">  
-                                                <label>(1) L: </label><input type="text" name="measure[1][1]" class="form-control" value="0" ng-model="addJob.item1.s1" ng-init="addJob.item1.s1 = ''">
+                                                <label>(1) L: </label><input type="text" name="measure[1][1]" class="form-control" value="0" ng-model="addJob.item1.s1" ng-init="addJob.item1.s1 = ''" tabindex="10">
                                              </div>
                                              <div class="form-group">  
                                                 <label>(2) SH:  </label>
-                                                 <input type="text" name="measure[1][2]" class="form-control" value="0" ng-model="addJob.item1.s2" ng-init="addJob.item1.s2 = ''">
+                                                 <input type="text" name="measure[1][2]" class="form-control" value="0" ng-model="addJob.item1.s2" ng-init="addJob.item1.s2 = ''" tabindex="11">
                                              </div>
                                              <div class="form-group">  
                                                 <label>(3) C:  </label>
-                                                 <input type="text" name="measure[1][3]" class="form-control" value="0" ng-model="addJob.item1.s3" ng-init="addJob.item1.s3 = ''">
+                                                 <input type="text" name="measure[1][3]" class="form-control" value="0" ng-model="addJob.item1.s3" ng-init="addJob.item1.s3 = ''" tabindex="12">
                                              </div>
                                        </div>
                                        <div class="col-sm-4">
                                             <div class="form-group">  
                                                 <label>(4) W: </label>
-                                                 <input type="text" name="measure[1][4]" class="form-control" value="0" ng-model="addJob.item1.s4" ng-init="addJob.item1.s4 = ''">
+                                                 <input type="text" name="measure[1][4]" class="form-control" value="0" ng-model="addJob.item1.s4" ng-init="addJob.item1.s4 = ''" tabindex="13">
                                              </div>
                                              <div class="form-group">  
                                                 <label>(5) H:  </label>
-                                                 <input type="text" name="measure[1][5]" class="form-control" value="0" ng-model="addJob.item1.s5" ng-init="addJob.item1.s5 = ''">
+                                                 <input type="text" name="measure[1][5]" class="form-control" value="0" ng-model="addJob.item1.s5" ng-init="addJob.item1.s5 = ''" tabindex="14">
                                              </div>
                                              <div class="form-group">  
                                                 <label>(6) S/L:  </label>
-                                                 <input type="text" name="measure[1][6]" class="form-control" value="0" ng-model="addJob.item1.s6" ng-init="addJob.item1.s6 = ''">
+                                                 <input type="text" name="measure[1][6]" class="form-control" value="0" ng-model="addJob.item1.s6" ng-init="addJob.item1.s6 = ''" tabindex="15">
                                              </div>
                                         
                                        </div>
                                        <div class="col-sm-4">
                                             <div class="form-group">  
                                                 <label>(7) N: </label>
-                                                 <input type="text" name="measure[1][7]" class="form-control" value="0" ng-model="addJob.item1.s7" ng-init="addJob.item1.s7 = ''">
+                                                 <input type="text" name="measure[1][7]" class="form-control" value="0" ng-model="addJob.item1.s7" ng-init="addJob.item1.s7 = ''" tabindex="16">
                                              </div>
                                              <div class="form-group">  
                                                 <label>(8) CF:  </label>
-                                                 <input type="text" name="measure[1][8]" class="form-control" value="0" ng-model="addJob.item1.s8" ng-init="addJob.item1.s8 = ''">
+                                                 <input type="text" name="measure[1][8]" class="form-control" value="0" ng-model="addJob.item1.s8" ng-init="addJob.item1.s8 = ''" tabindex="17">
                                              </div>
                                        </div>
                                  </div>      
@@ -154,48 +153,48 @@
                              <div class="col-sm-4">
                                  <div class="row">
                                        <div class="col-sm-6">
-                                         <select name="dressid" ng-model="addJob.dressid2" class="form-control" ng-init="addJob.dressid2 = '0'">                                                
+                                         <select name="dressid" ng-model="addJob.dressid2" class="form-control" ng-init="addJob.dressid2 = '0'" tabindex="18">                                                
                                                 <option value="2" selected>Trouser</option>
                                                 <option value="5">Skirt</option>
                                             </select>                                             
                                        </div> 
                                        <div class="col-sm-6">
-                                         <div class="form-group">  <input type="text" name="qty[2]" placeholder="Qty" class="form-control" value="" ng-model="addJob.qty2" ng-init="addJob.qty2 = ''"></div>
+                                         <div class="form-group">  <input type="text" name="qty[2]" placeholder="Qty" class="form-control" value="" ng-model="addJob.qty2" ng-init="addJob.qty2 = ''" tabindex="19"></div>
                                        </div> 
                                  </div>
                                  <div class="row vertical-divider">
                                        <div class="col-sm-4">
                                             <div class="form-group">  
-                                                <label>(1) L: </label><input type="text" name="eid" class="form-control" value="" ng-model="addJob.item2.s1" ng-init="addJob.item2.s1 = ''">
+                                                <label>(1) L: </label><input type="text" name="eid" class="form-control" value="" ng-model="addJob.item2.s1" ng-init="addJob.item2.s1 = ''" tabindex="20">
                                              </div>
                                              <div class="form-group">  
                                                 <label>(2) W:  </label>
-                                                 <input type="text" name="eid" class="form-control" value="0" ng-model="addJob.item2.s2" ng-init="addJob.item2.s2 = ''">
+                                                 <input type="text" name="eid" class="form-control" value="0" ng-model="addJob.item2.s2" ng-init="addJob.item2.s2 = ''" tabindex="21">
                                              </div>
                                              <div class="form-group">  
                                                 <label>(3) H:  </label>
-                                                 <input type="text" name="eid" class="form-control" value="0" ng-model="addJob.item2.s5" ng-init="addJob.item2.s5 = ''">
+                                                 <input type="text" name="eid" class="form-control" value="0" ng-model="addJob.item2.s5" ng-init="addJob.item2.s5 = ''" tabindex="22">
                                              </div>
                                        </div>
                                        <div class="col-sm-4">
                                             <div class="form-group">  
                                                 <label>(4) T: </label>
-                                                 <input type="text" name="eid" class="form-control" value="0" ng-model="addJob.item2.s9" ng-init="addJob.item2.s9 = ''">
+                                                 <input type="text" name="eid" class="form-control" value="0" ng-model="addJob.item2.s9" ng-init="addJob.item2.s9 = ''" tabindex="23">
                                              </div>
                                              <div class="form-group">  
                                                 <label>(5) U:  </label>
-                                                 <input type="text" name="eid" class="form-control" value="0" ng-model="addJob.item2.s14" ng-init="addJob.item2.s14 = ''">
+                                                 <input type="text" name="eid" class="form-control" value="0" ng-model="addJob.item2.s14" ng-init="addJob.item2.s14 = ''" tabindex="24">
                                              </div>
                                              <div class="form-group">  
                                                 <label>(6) K:  </label>
-                                                 <input type="text" name="eid" class="form-control" value="0" ng-model="addJob.item2.s10" ng-init="addJob.item2.s10 = ''">
+                                                 <input type="text" name="eid" class="form-control" value="0" ng-model="addJob.item2.s10" ng-init="addJob.item2.s10 = ''" tabindex="25">
                                              </div>
                                         
                                        </div>
                                        <div class="col-sm-4">
                                             <div class="form-group">  
                                                 <label>(7) B: </label>
-                                                 <input type="text" name="eid" class="form-control" value="0" ng-model="addJob.item2.s11" ng-init="addJob.item2.s11 = ''">
+                                                 <input type="text" name="eid" class="form-control" value="0" ng-model="addJob.item2.s11" ng-init="addJob.item2.s11 = ''" tabindex="26">
                                              </div>
                                              
                                        </div>
@@ -204,52 +203,52 @@
                              <div class="col-sm-4">
                                     <div class="row">
                                        <div class="col-sm-6">
-                                        <select name="dressid" ng-model="addJob.dressid3" class="form-control" ng-init="addJob.dressid3 = '0'">
+                                        <select name="dressid" ng-model="addJob.dressid3" class="form-control" ng-init="addJob.dressid3 = '0'" tabindex="27">
                                                 <option value="3" selected>Jacket</option>
                                                 <option value="6">Coat</option>
                                             </select>    
                                        </div> 
                                        <div class="col-sm-6">
-                                         <div class="form-group">  <input type="text" name="qty[3]" placeholder="Qty" class="form-control" value="0" ng-model="addJob.qty3" ng-init="addJob.qty3 = ''"></div>
+                                         <div class="form-group">  <input type="text" name="qty[3]" placeholder="Qty" class="form-control" value="0" ng-model="addJob.qty3" ng-init="addJob.qty3 = ''" tabindex="28"></div>
                                        </div> 
                                  </div>
                                  <div class="row vertical-divider">
                                        <div class="col-sm-4">
                                             <div class="form-group">  
-                                                <label>(1) L: </label><input type="text" name="item3.s1" class="form-control" value="" ng-model="addJob.item3.s1" ng-init="addJob.item3.s1=''">
+                                                <label>(1) L: </label><input type="text" name="item3.s1" class="form-control" value="" ng-model="addJob.item3.s1" ng-init="addJob.item3.s1=''" tabindex="29">
                                              </div>
                                              <div class="form-group">  
                                                 <label>(2) SH:  </label>
-                                                 <input type="text" name="item3.s2" class="form-control" value="0" ng-model="addJob.item3.s2" ng-init="addJob.item3.s1=''">
+                                                 <input type="text" name="item3.s2" class="form-control" value="0" ng-model="addJob.item3.s2" ng-init="addJob.item3.s1=''" tabindex="30">
                                              </div>
                                              <div class="form-group">  
                                                 <label>(3) C:  </label>
-                                                 <input type="text" name="item3.s3" class="form-control" value="0" ng-model="addJob.item3.s3" ng-init="addJob.item3.s3=''">
+                                                 <input type="text" name="item3.s3" class="form-control" value="0" ng-model="addJob.item3.s3" ng-init="addJob.item3.s3=''" tabindex="31">
                                              </div>
                                        </div>
                                        <div class="col-sm-4">
                                             <div class="form-group">  
                                                 <label>(4) W: </label>
-                                                 <input type="text" name="item3.s4" class="form-control" value="" ng-model="addJob.item3.s4" ng-init="addJob.item3.s4=''">
+                                                 <input type="text" name="item3.s4" class="form-control" value="" ng-model="addJob.item3.s4" ng-init="addJob.item3.s4=''" tabindex="32">
                                              </div>
                                              <div class="form-group">  
                                                 <label>(5) H:  </label>
-                                                 <input type="text" name="eid" class="form-control" value="0" ng-model="addJob.item3.s5" ng-init="addJob.item3.s5=''">
+                                                 <input type="text" name="eid" class="form-control" value="0" ng-model="addJob.item3.s5" ng-init="addJob.item3.s5=''" tabindex="33">
                                              </div>
                                              <div class="form-group">  
                                                 <label>(6) S/L:  </label>
-                                                 <input type="text" name="eid" class="form-control" value="0" ng-model="addJob.item3.s6" ng-init="addJob.item3.s6=''">
+                                                 <input type="text" name="eid" class="form-control" value="0" ng-model="addJob.item3.s6" ng-init="addJob.item3.s6=''" tabindex="34">
                                              </div>
                                         
                                        </div>
                                        <div class="col-sm-4">
                                             <div class="form-group">  
                                                 <label>(7) B/L/OP: </label>
-                                                 <input type="text" name="eid" class="form-control" value="0" ng-model="addJob.item3.s12" ng-init="addJob.item3.s12=''">
+                                                 <input type="text" name="eid" class="form-control" value="0" ng-model="addJob.item3.s12" ng-init="addJob.item3.s12=''" tabindex="35">
                                              </div>
                                              <div class="form-group">  
                                                 <label>(8) Arm:  </label>
-                                                 <input type="text" name="eid" class="form-control" value="0" ng-model="addJob.item3.s13" ng-init="addJob.item3.s13=''">
+                                                 <input type="text" name="eid" class="form-control" value="0" ng-model="addJob.item3.s13" ng-init="addJob.item3.s13=''" tabindex="36">
                                              </div>
                                        </div>
                                  </div>      
@@ -257,14 +256,33 @@
                              </div>   
                              
                         </div> 
+                        <div class="row vertical-divider">
+                            <div class="col-sm-4">
+                                     <div class="form-group"> 
+                                            <label> Others </label>
+                                            <select name="dressid" ng-model="addJob.others" ng-init="addJob.others = '0'" class="form-control" tabindex="37">                                                
+                                                <option value="7" selected>Tie</option>
+                                                <option value="8">Belt</option>
+                                                <option value="9">Bow</option>
+                                                <option value="10">Cap</option>
+                                            </select>   
+                                     </div> 
+                            </div>
+                            <div class="col-sm-4">
+                                    <div class="form-group">
+                                      <label> Qty </label> 
+                                          <input type="text" name="qty[4]" placeholder="Qty" class="form-control" value="0" ng-model="addJob.qty4" ng-init="addJob.qty4 = ''" tabindex="38">  
+                                    </div>
+                            </div>    
+                        </div>
                         <div class="divider"></div>
 
                         <div class="row">
                            <div class="col-sm-4 col-offset-sm-2">
-                             <button class="red" ng-click="doAddjob(addJob)" data-ng-disabled="addJobForm.$invalid">CREATE</button>
+                             <button class="red" ng-click="doAddjob(addJob)" data-ng-disabled="addJobForm.$invalid" tabindex="39">CREATE</button>
                            </div> 
                            <div class="col-sm-4 col-offset-sm-2">
-                             <button class="green" ng-click="goToJob()">GO TO JOBS</button>
+                             <button class="green" ng-click="goToJob()" tabindex="40">GO TO JOBS</button>
                            </div> 
                         </div> 
                         </form>    

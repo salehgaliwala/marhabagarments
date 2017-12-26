@@ -71,14 +71,26 @@ return [
 app.controller('lpocrtljob',[
   '$scope','$http','$location','$routeParams',
    function($scope, $http) {
+     $scope.populatelpos = function(companyid) {
         var obj = {};
-        $http.get('api/v1/lpos').then(function(results) {   
+        $http.get('api/v1/lpos/'+companyid).then(function(results) {   
                // alert(JSON.stringify(results));        
                   obj.get = results.data; 
                   $scope.lpos = results.data;
-        });
-        $scope.x = 'ABC';
+        });      
+        
+        } 
+     // Initialize the LPOS on load for edit
      
+     $scope.populatelpobynum = function(lponum) {
+        var obj = {};
+        $http.get('api/v1/populatelpobynum/'+lponum).then(function(results) {   
+               // alert(JSON.stringify(results));        
+                  obj.get = results.data; 
+                  $scope.lpos = results.data;
+        });      
+        
+        }             
     }
 ]);
 

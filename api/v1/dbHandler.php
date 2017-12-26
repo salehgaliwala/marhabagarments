@@ -32,9 +32,9 @@ class DbHandler {
         return $result;  
     }
 
-    public function getAllLPO() {
+    public function getAllLPO($company) {
 
-        $query1 = "SELECT lponum , (shirts + trousers + jackets + others) AS total from lpo";
+        $query1 = "SELECT lponum , (shirts + trousers + jackets + others) AS total from lpo where companyid = $company ";
         $r1 = $this->conn->query($query1) or die($this->conn->error.__LINE__);
         while($row1 = $r1->fetch_assoc())
         {
@@ -139,7 +139,27 @@ public function destroySession(){
     }
     return $msg;
 }
+
+function ifrecordexist($field , $value , $tablename , $field_optional , $value_optional)
+{
+   $error = false;
+   $response = array();
+   $query = "Select * from $tablename where $field = $value";
+   if(!empty($field_optional) and !empty($value_optional))
+   {
+    $query .= " AND $field_optional = $value_optional";
+   }
+   $r = $this->conn->query($query) or die($this->conn->error.__LINE__);
+   $row_cnt = $r->num_rows;
+   if( $row_cnt > 0 )
+   {
+         $response["status"] = "error";
+         $response["message"] = 'LPO '.$value.' already exist';
+         echoResponse(200, $response);
+         die();
+   }
+
+}
  
 }
-
 ?>
