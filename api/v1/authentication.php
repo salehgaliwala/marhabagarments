@@ -146,7 +146,7 @@ $app->get('/populatejobtypes/:id', function($comapnyid){
 
   $db = new DbHandler();
         $response = array();
-        $response=$db->getAllRecord("SELECT * from jobtype where jobtypeid='$comapnyid'"); 
+        $response=$db->getAllRecord("SELECT * from jobtype where companyid='$comapnyid'");
          echoResponse(200, $response);
 });
 
