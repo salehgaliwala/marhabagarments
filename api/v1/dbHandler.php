@@ -25,16 +25,18 @@ class DbHandler {
 
     public function getAllRecord($query) {
         $r = $this->conn->query($query) or die($this->conn->error.__LINE__);
+        $result = null;
+
         while($row = $r->fetch_assoc())
         {
             $result[] = $row;
         }
-        return $result;  
+        return $result;
     }
 
     public function getAllLPO($company) {
 
-        $query1 = "SELECT lponum , (shirts + trousers + jackets + others) AS total from lpo where companyid = $company ";
+        $query1 = "SELECT lponum , (shirts + trousers + jackets + tshirt + skirt + coat + tie + belt + bow + cap) AS total, id from lpo where companyid = $company ";
         $r1 = $this->conn->query($query1) or die($this->conn->error.__LINE__);
         while($row1 = $r1->fetch_assoc())
         {

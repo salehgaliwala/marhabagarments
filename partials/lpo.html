@@ -37,8 +37,15 @@
              <th class="shirts"> <a href="" ng-click="columnToOrder='shirts';reverse=!reverse"> Shirts </a> </th>
              <th class="trousers"> <a href="" ng-click="columnToOrder='trousers';reverse=!reverse"> Trousers </a> </th>
              <th class="jackets"> <a href="" ng-click="columnToOrder='jackets';reverse=!reverse"> Jacket </a> </th>
-             <th class="others"> <a href="" ng-click="columnToOrder='others';reverse=!reverse">Others </a> </th>  
-             <th class="lpototal">   <a href="" ng-click="columnToOrder='lpototal';reverse=!reverse">Total </a> </th>         
+             <th class="tshirt"> <a href="" ng-click="columnToOrder='tshirt';reverse=!reverse"> Tshirt </a> </th>
+             <th class="skirt"> <a href="" ng-click="columnToOrder='skirt';reverse=!reverse"> Skirt </a> </th>
+             <th class="coat"> <a href="" ng-click="columnToOrder='coat';reverse=!reverse"> Coat </a> </th>
+             <!--<th class="others"> <a href="" ng-click="columnToOrder='others';reverse=!reverse">Others </a> </th>-->
+             <th class="tie"> <a href="" ng-click="columnToOrder='tie';reverse=!reverse">Tie </a> </th>
+             <th class="belt"> <a href="" ng-click="columnToOrder='belt';reverse=!reverse">Belt </a> </th>
+             <th class="bow"> <a href="" ng-click="columnToOrder='bow';reverse=!reverse">Bow </a> </th>
+             <th class="cap"> <a href="" ng-click="columnToOrder='cap';reverse=!reverse">Cap </a> </th>
+             <th class="lpototal">   <a href="" ng-click="columnToOrder='lpototal';reverse=!reverse">Total </a> </th>
          </tr>
      </thead> 
      <tbody>
@@ -49,8 +56,15 @@
              <td>{{item.shirts}}</td>
              <td>{{item.trousers}}</td>
              <td>{{item.jackets}}</td>
-             <td>{{item.others}}</td>
-             <td>{{item.total}}</td>           
+             <td>{{item.tshirt}}</td>
+             <td>{{item.skirt}}</td>
+             <td>{{item.coat}}</td>
+             <!--<td>{{item.others}}</td>-->
+             <td>{{item.tie}}</td>
+             <td>{{item.belt}}</td>
+             <td>{{item.bow}}</td>
+             <td>{{item.cap}}</td>
+             <td>{{item.total}}</td>
           
              <td><a href="#!/editlpo/{{item.id}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
              <td ng-click="doDellpo(item.id)"><i class="fa fa-trash-o" aria-hidden="true"></i></td>
