@@ -47,7 +47,7 @@ $app->get('/lpo', function() {
                                     lpo.cap,
                                     lpo.companyid,
                                     company.companyname,
-                                    (lpo.shirts + lpo.trousers + lpo.jackets + lpo.tshirt + lpo.skirt + lpo.coat + lpo.tie + lpo.belt + lpo.bow + lpo.cap + lpo.companyid) AS total
+                                    (lpo.shirts + lpo.trousers + lpo.jackets + lpo.tshirt + lpo.skirt + lpo.coat + lpo.tie + lpo.belt + lpo.bow + lpo.cap ) AS total
                                     FROM
                                     lpo
                                     Inner Join company ON lpo.companyid = company.companyid where lpo.isdelete = 'N'");
