@@ -146,7 +146,7 @@ function ifrecordexist($field , $value , $tablename , $field_optional , $value_o
 {
    $error = false;
    $response = array();
-   $query = "Select * from $tablename where $field = $value";
+   $query = "Select * from $tablename where $field = '$value'";
    if(!empty($field_optional) and !empty($value_optional))
    {
     $query .= " AND $field_optional = $value_optional";
