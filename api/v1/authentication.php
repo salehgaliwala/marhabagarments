@@ -28,6 +28,26 @@ $app->get('/job', function() {
   
      echoResponse(200, $response);
 });
+// Production report 
+$app->get('/prodreport', function() {
+    $db = new DbHandler();
+    $response = array();
+    $response= $db->getAllRecord("SELECT
+                                    jobs.jobid,
+                                    jobs.name,
+                                    jobs.status,
+                                    jobs.location,
+                                    jobs.po as lpo,
+                                    jobs.eid,
+                                    jobs.jobtype,
+                                    jobs.gender,
+                                    jobs.datecreated,
+                                    company.companyname
+                                    FROM
+                                    jobs
+                                    Inner Join company ON jobs.company = company.companyid where jobs.isdelete = 'N'");
+    echoResponse(200, $response);
+});
 
 $app->get('/lpo', function() {
     $db = new DbHandler();
@@ -92,31 +112,25 @@ $app->get('/queue', function() {
   
      echoResponse(200, $response);
 });
-$app->post('/getemployeejobreport', function() use ($app) {
-
+$app->post('/prodreport', function() use ($app) {
 $r = json_decode($app->request->getBody());
-$db = new DbHandler();
 $response = array();
-$response= $db->getAllRecord("SELECT
-                                    dresses.dressname,
-                                    company.companyname,
-                                    jobs.name,
-                                    jobs.jobtype,
-                                    jobs.isdelete,
-                                    dresses.dressname,
-                                    jobitems.`status`,
-                                    jobitems.qty,
-                                    jobitems.jobitemid,
-                                    jobitems.assignto,
-                                    jobitems.status
-                                    FROM
-                                    jobs
-                                    Left Join jobitems ON jobitems.jobid = jobs.jobid
-                                    Left Join company ON jobs.company = company.companyid
-                                    Right Join dresses ON jobitems.dressid = dresses.dressid where jobs.isdelete = 'N' AND datecomplete BETWEEN '".$r->datefrom."' AND '".$r->dateto."' AND assignto =".$r->userid);
-  
-     echoResponse(200, $response);
+$db = new DbHandler();
+if(empty($r->prodreport->datefrom))
+    $r->prodreport->datefrom = NULL;
+if(empty($r->prodreport->dateto))
+    $r->prodreport->dateto = NULL;
+if(!isset($r->prodreport->reportfilter))
+    $r->prodreport->reportfilter='';
+if(!isset($r->prodreport->term))
+    $r->prodreport->term='';
+$response = $db->findData($r->prodreport->datefrom,$r->prodreport->dateto,$r->prodreport->reportfilter,$r->prodreport->term);
+echoResponse(200, $response);
 });
+
+
+
+
 $app->get('/users', function() {
     session_start();
     $db = new DbHandler();

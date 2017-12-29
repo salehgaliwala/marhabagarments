@@ -1,4 +1,4 @@
-var app = angular.module('myApp', ['ngRoute', 'ngAnimate', 'toaster']);
+var app = angular.module('myApp', ['ngRoute', 'ngAnimate', 'toaster', 'ngTableToCsv']);
 
 app.config(['$routeProvider',
   function ($routeProvider) {
@@ -116,6 +116,11 @@ app.config(['$routeProvider',
                .when('/companies', {
                 title: 'users',
                 templateUrl: 'partials/companies.html',
+                controller: 'authCtrl'
+            })
+               .when('/reportproduction', {
+                title: 'users',
+                templateUrl: 'partials/reportproduction.html',
                 controller: 'authCtrl'
             })
             .when('/', {

@@ -1,5 +1,6 @@
 <?php
-$con=mysqli_connect("localhost","cupcakes_master","Sakina88!","cupcakes_marhaba");
+//$con=mysqli_connect("localhost","cupcakes_master","Sakina88!","cupcakes_marhaba");
+$con=mysqli_connect("localhost","root","","cms");
 // Check connection
 if (mysqli_connect_errno())
   {

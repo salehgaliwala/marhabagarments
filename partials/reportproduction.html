@@ -1,0 +1,94 @@
+ <div class="navbar-more-overlay"></div>
+    
+        <!-- /#sidebar-wrapper --><div id="page-content-wrapper">
+           <div class="container">
+           <div class="row">
+                <div class="col-md-6 col-md-offset-3 text-center">
+                <img src="img/logo.jpg" />
+                </div>
+           </div>   
+<div class="page-content reports" ng-controller="prodreportCtrl">
+    <div class="row">
+        <div class="space-6"></div>
+
+        <div class="row" >
+        <hr class="style1" />
+          <form name="prodreportform" role="form">
+            <div class="col-sm-2">
+                <input type="date" name="fromdate" ng-model="prodreport.datefrom"/>
+            </div>
+            <div class="col-sm-2">
+                <input type="date" name="todate" ng-model="prodreport.dateto"/>
+            </div>
+            <div class="col-sm-2">
+                <select name="reportfilter" ng-model="prodreport.reportfilter">
+                    <option value="companyname">Company Name</option>
+                    <option value="name">Employee Name</option>
+                    <option value="po">LPO</option>
+                    <option value="jobid">Job ID</option>
+                    <option value="status">Status</option>
+                </select>
+            </div>
+            <div class="col-sm-4">
+               <input type="text" name="search-term" placeholder="Search ....." ng-model="prodreport.term"/>
+            </div>
+            <div class="col-sm-1">
+               <button type="submit" class="btn btn-sm btn-primary btnReports" ng-click="searchProdReport(prodreport)" data-ng-disabled="prodreportform.$invalid">Submit</button>
+            </div>
+            </form> 
+            <div class="col-sm-1">
+             
+               <a class="btn" title="Export Table" ng-click="csv.generate()" ng-href="{{ csv.link() }}" download="myTable.csv">
+                 <i class="glyphicon glyphicon-new-window"></i> Export</a>
+            </div>
+           
+        </div> 
+        <hr class="style1" />
+        <div class="row">
+            <table class="table  table-hover data-table sort display table-fixed" export-csv="csv" separator="," export-csv-ignore="ignore">
+     <thead>
+         <tr>        
+             <th class="jobid"> <a href="" ng-click="columnToOrder='jobid';reverse=!reverse"> Job# </a> </th>
+             <th class="companyname"> <a href="" ng-click="columnToOrder='companyname';reverse=!reverse"> Company Name </a> </th>
+             <th class="eid"> <a href="" ng-click="columnToOrder='employeeid';reverse=!reverse"> Employee ID </a> </th>
+             <th class="name"> <a href="" ng-click="columnToOrder='name';reverse=!reverse"> Name </a> </th>
+             <th class="location"> <a href="" ng-click="columnToOrder='location';reverse=!reverse"> Location </a> </th>
+             <th class="po"> <a href="" ng-click="columnToOrder='jobid';reverse=!reverse"> LPO# </a> </th>
+             <th class="shirts"> <a href="" ng-click="columnToOrder='shirts';reverse=!reverse"> Shirts </a> </th>
+             <th class="trousers"> <a href="" ng-click="columnToOrder='trousers';reverse=!reverse"> Trousers </a> </th>
+             <th class="jackets"> <a href="" ng-click="columnToOrder='jackets';reverse=!reverse"> Jacket </a> </th>
+             <th class="tshirt"> <a href="" ng-click="columnToOrder='tshirt';reverse=!reverse"> Tshirt </a> </th>
+             <th class="skirt"> <a href="" ng-click="columnToOrder='skirt';reverse=!reverse"> Skirt </a> </th>
+             <th class="coat"> <a href="" ng-click="columnToOrder='coat';reverse=!reverse"> Coat </a> </th>
+             <!--<th class="others"> <a href="" ng-click="columnToOrder='others';reverse=!reverse">Others </a> </th>-->
+             <th class="tie"> <a href="" ng-click="columnToOrder='tie';reverse=!reverse">Tie </a> </th>
+             <th class="belt"> <a href="" ng-click="columnToOrder='belt';reverse=!reverse">Belt </a> </th>
+             <th class="bow"> <a href="" ng-click="columnToOrder='bow';reverse=!reverse">Bow </a> </th>
+             <th class="cap"> <a href="" ng-click="columnToOrder='cap';reverse=!reverse">Cap </a> </th>
+             <th class="status">   <a href="" ng-click="columnToOrder='lpototal';reverse=!reverse">Status </a> </th>
+         </tr>
+     </thead> 
+         <tr ng-repeat="record in records | orderBy:columnToOrder:reverse">
+             <td>{{record.jobid}}</td>
+             <td>{{record.companyname}}</td>
+             <td>{{record.eid}}</td>
+             <td>{{record.name}}</td>
+             <td>{{record.location}}</td>
+             <td>{{record.po}}</td>
+             <td>{{record.shirts}}</td>
+             <td>{{record.trousers}}</td>
+             <td>{{record.jackets}}</td>
+             <td>{{record.tshirt}}</td>
+             <td>{{record.skirt}}</td>
+             <td>{{record.coat}}</td>            
+             <td>{{record.tie}}</td>
+             <td>{{record.belt}}</td>
+             <td>{{record.bow}}</td>
+             <td>{{record.cap}}</td>
+             <td>{{record.status}}</td>
+         </tr>       
+     <tbody>
+        </div>    
+    </div>
+</div>
+<!-- /.page-content -->

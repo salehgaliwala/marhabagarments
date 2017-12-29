@@ -215,3 +215,30 @@ body {
 .icon-search {
   margin-left: -25px;
 }
+.page-content {margin-top: 25px}
+
+
+hr.style1{
+	border-top: 1px solid #E12387;
+}
+
+
+hr.style2 {
+	border-top: 3px double #8c8b8b;
+}
+
+hr.style3 {
+	border-top: 1px dashed #8c8b8b;
+}
+
+hr.style4 {
+	border-top: 1px dotted #8c8b8b;
+}
+
+hr.style5 {
+	background-color: #fff;
+	border-top: 2px dashed #8c8b8b;
+}
+
+.btnReports{background: #E12387;color: #fff;height: 40px;border:none;width: 100%}
+.reports input,.reports select {height: 40px;border: 1px solid #E12387;width: 100%;}

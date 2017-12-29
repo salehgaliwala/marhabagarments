@@ -34,6 +34,85 @@ class DbHandler {
         return $result;
     }
 
+    public function databasedate($inputdate)
+    {
+        $inputdate = explode("T",$inputdate);
+        return $inputdate[0];
+    }
+    public function finddata($fromdate,$todate,$reportfilter,$term)
+    {
+        
+        
+         $result = null;
+
+        if(!empty($fromdate) and empty($todate))
+        {
+            $fromdate = $this->databasedate($fromdate);
+            $todate = $this->databasedate($todate);
+            $datewhereQuery = "AND datecreated Between '$fromdate' AND '".date('Y-m-d')."'";    
+        }
+
+        if(!empty($fromdate) and !empty($todate))
+        {
+            $fromdate = $this->databasedate($fromdate);
+            $todate = $this->databasedate($todate);
+            $datewhereQuery = "AND datecreated Between '$fromdate' AND '$todate'";    
+        }
+        else
+        {
+            $datewhereQuery ='';
+        }    
+
+        if(!empty($term) and !empty($reportfilter))
+        {
+
+            $andclauseone = "AND $reportfilter LIKE '%$term%'";
+        }
+        else
+        {
+           $andclauseone = ''; 
+        }    
+
+
+        $query1 = "SELECT
+                    jobs.company,
+                    company.companyid,
+                    company.companyname,
+                    jobs.jobid,
+                    jobs.name,
+                    jobs.location,
+                    jobs.eid,
+                    jobs.po,
+                    jobs.status
+                    FROM
+                    company
+                    Inner Join jobs ON company.companyid = jobs.company where 1=1 ".$datewhereQuery. " ".$andclauseone;
+        $r1 = $this->conn->query($query1) or die($this->conn->error.__LINE__);
+          while($row1 = $r1->fetch_assoc())
+             {
+                $result1 = array();
+                $result1 = $row1;
+                $query2 = "SELECT                                
+                                jobitems.dressid,
+                                dresses.dressid,
+                                dresses.dressname,
+                                jobitems.qty
+                                FROM
+                                dresses
+                                Inner Join jobitems ON dresses.dressid = jobitems.dressid where jobitems.jobid = ".$row1['jobid'];
+                $r2 = $this->conn->query($query2) or die($this->conn->error.__LINE__); 
+                 $result2 = array();    
+                 while($row2 = $r2->fetch_assoc())
+                    {           
+                        $result2[$row2['dressname']] = $row2['qty'];
+
+                    } 
+                    $result[] = array_merge($result1, $result2);       
+             }   
+
+             return $result; 
+    }
+
     public function getAllLPO($company) {
 
         $query1 = "SELECT lponum , (shirts + trousers + jackets + tshirt + skirt + coat + tie + belt + bow + cap) AS total from lpo where companyid = $company ";
