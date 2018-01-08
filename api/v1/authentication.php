@@ -726,7 +726,7 @@ $response = array();
 
     $db = new DbHandler();
     $tabble_name = "jobs";
-    $column_names = array('company', 'name', 'eid', 'po', 'gender', 'jobtype');
+    $column_names = array('company', 'name', 'eid', 'po', 'gender', 'jobtype','location');
     $result = $db->insertIntoTable($r->customer, $column_names, $tabble_name);
     $show = $result;
 
@@ -968,6 +968,14 @@ $app->post('/dellocation', function() use ($app) {
     $response = '';
     if($_SESSION['role'] == 0)
         $response=$db->DelRecord("Update location SET isdelete = 'Y' where locationid = $r->locationid");
+    echoResponse(200, $response);
+});
+
+$app->get('/populatelocationbyid/:locationid', function($locationid){
+
+    $db = new DbHandler();
+    $response = array();
+    $response=$db->getAllRecord("SELECT * from location where locationid='$locationid'");
     echoResponse(200, $response);
 });
 ?>

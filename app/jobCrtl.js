@@ -53,7 +53,29 @@ app.controller('companycrtl',[
                   $scope.jobtypes = results.data;
         });   
       };
-    }
+
+        //Added new
+       $scope.populatelocation = function(companyid) {
+           var obj = {};
+           $http.get('api/v1/populatelocation/'+companyid).then(function(results) {
+               // alert(JSON.stringify(results));
+               obj.get = results.data;
+               $scope.locations = results.data;
+               // alert(JSON.stringify($scope.locations));
+           });
+       };
+
+       $scope.populatelocationbyid = function(locationid) {
+           var obj = {};
+           $http.get('api/v1/populatelocationbyid/'+locationid).then(function(results) {
+               // alert(JSON.stringify(results));
+               obj.get = results.data;
+               $scope.locations = results.data;
+           });
+       };
+
+
+   }
 
     
 ]);
