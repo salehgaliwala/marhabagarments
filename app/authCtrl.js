@@ -171,7 +171,7 @@ app.controller('authCtrl', function ($scope, $rootScope, $routeParams, $location
             }
         });
     };
-    
+
     $scope.loadcompany = function() {
         var obj = {};
         $http.get('api/v1/companies').then(function(results) {   
@@ -197,4 +197,26 @@ app.controller('authCtrl', function ($scope, $rootScope, $routeParams, $location
             $location.path('login');
         });
     }
+
+    //Location
+    $scope.goToAddLocation = function () {
+        $location.path('addlocation');
+    };
+
+    $scope.doAddLocation = function (location) {
+        // alert(JSON.stringify(customer));
+        Data.post('addlocation', {
+            location: location
+        }).then(function (results) {
+            //  alert(JSON.stringify(results));
+            Data.toast(results);
+
+            if (results.status == "success") {
+                $scope.messages = 'Location Added';
+                // alert($scope.messages);
+                //   $location.path('location');
+
+            }
+        });
+    };
 });

@@ -129,6 +129,21 @@ app.config(['$routeProvider',
                 controller: 'authCtrl',
                 role: '0'
             })
+            .when('/location', {
+                title: 'Location',
+                templateUrl: 'partials/location.html',
+                controller: 'authCtrl'
+            })
+            .when('/addlocation', {
+                title: 'AddLocation',
+                templateUrl: 'partials/addlocation.html',
+                controller: 'authCtrl'
+            })
+            .when('/editlocation/:id',
+                {
+                    templateUrl: 'partials/editlocation.html',
+                    controller: ''
+                })
             .otherwise({
                 redirectTo: '/login'
             });

@@ -893,4 +893,81 @@ $app->get('/logout', function() {
     $response["message"] = "Logged out successfully";
     echoResponse(200, $response);
 });
+
+// Add Location
+$app->post('/addlocation', function() use ($app) {
+    $r = json_decode($app->request->getBody());
+    verifyRequiredParams(array('locationname','companyid'),$r->location);
+    $response = array();
+    $db = new DbHandler();
+    $tabble_name = "location";
+    $column_names = array('locationname', 'companyid');
+    $result = $db->insertIntoTable($r->location, $column_names, $tabble_name);
+    if ($result != NULL) {
+        $response["status"] = "success";
+        $response["message"] = "Job Type saved successfully";
+
+    }else{
+        $response["status"] = "error";
+        $response["message"] = "Fields missing";
+        echoResponse(201, $response);
+    }
+    echoResponse(200,$response);
+
+});
+
+$app->get('/locations', function(){
+    $db = new DbHandler();
+    $response = array();
+    $response=$db->getAllRecord("SELECT location.companyid,location.locationname,location.locationid,company.companyid,company.companyname
+            FROM
+            location
+            Inner Join company ON company.companyid = location.companyid and location.isdelete = 'N'");
+    echoResponse(200, $response);
+});
+$app->get('/populatelocation/:id', function($comapnyid){
+
+    $db = new DbHandler();
+    $response = array();
+    $response=$db->getAllRecord("SELECT * from location where companyid='$comapnyid'");
+    echoResponse(200, $response);
+});
+
+$app->get('/editlocation/:id', function($locationid){
+
+    $db = new DbHandler();
+    $response = array();
+    $response=$db->geteditrecords("select * from location where isdelete ='N' and locationid ='$locationid'");
+    echoResponse(200, $response);
+
+});
+
+$app->post('/savelocation', function() use ($app) {
+    $r = json_decode($app->request->getBody());
+    $db = new DbHandler();
+    $response = array();
+    $result=$db->DelRecord("Update location SET locationname = '".$r->location->locationname."' where locationid = '".$r->location->locationid."'");
+    $result=$db->DelRecord("Update location SET companyid = '".$r->location->companyid."' where locationid = '".$r->location->locationid."'");
+    if ($result != NULL) {
+        $response["status"] = "success";
+        $response["message"] = "Company saved successfully";
+
+    }else{
+        $response["status"] = "error";
+        $response["message"] = "Fields missing";
+        echoResponse(201, $response);
+    }
+    echoResponse(200,$response);
+
+});
+
+$app->post('/dellocation', function() use ($app) {
+    session_start();
+    $r = json_decode($app->request->getBody());
+    $db = new DbHandler();
+    $response = '';
+    if($_SESSION['role'] == 0)
+        $response=$db->DelRecord("Update location SET isdelete = 'Y' where locationid = $r->locationid");
+    echoResponse(200, $response);
+});
 ?>
