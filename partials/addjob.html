@@ -41,6 +41,8 @@
                                     <div class="form-group">
                                         <!--<span class="error-message" ng-show="addJobForm.location.$dirty && addJobForm.location.$error.required">Please enter location</span>
                                     <input type="text" name="location" id="location" tabindex="3" class="form-control" placeholder="location" value="" ng-model="addJob.location" required>-->
+
+                                        <input type="text" name="slipno" id="slipno" tabindex="41" class="form-control" placeholder="Slip Number" value="" ng-model="addJob.slipno" required>
                                     </div>
 
 
@@ -159,7 +161,8 @@
                                          <select name="dressid" ng-model="addJob.dressid2" class="form-control" ng-init="addJob.dressid2 = '0'" tabindex="18">                                                
                                                 <option value="2" selected>Trouser</option>
                                                 <option value="5">Skirt</option>
-                                            </select>                                             
+                                                <option value="16">Cargo Pants</option>
+                                            </select>
                                        </div> 
                                        <div class="col-sm-6">
                                          <div class="form-group">  <input type="text" name="qty[2]" placeholder="Qty" class="form-control" value="" ng-model="addJob.qty2" ng-init="addJob.qty2 = ''" tabindex="19"></div>
@@ -209,7 +212,8 @@
                                         <select name="dressid" ng-model="addJob.dressid3" class="form-control" ng-init="addJob.dressid3 = '0'" tabindex="27">
                                                 <option value="3" selected>Jacket</option>
                                                 <option value="6">Coat</option>
-                                            </select>    
+                                                <option value="17">Waist</option>
+                                            </select>
                                        </div> 
                                        <div class="col-sm-6">
                                          <div class="form-group">  <input type="text" name="qty[3]" placeholder="Qty" class="form-control" value="0" ng-model="addJob.qty3" ng-init="addJob.qty3 = ''" tabindex="28"></div>
@@ -260,7 +264,7 @@
                              
                         </div> 
                         <div class="row vertical-divider">
-                            <div class="col-sm-4">
+                           <!-- <div class="col-sm-4">
                                      <div class="form-group"> 
                                             <label> Others </label>
                                             <select name="dressid" ng-model="addJob.others" ng-init="addJob.others = '0'" class="form-control" tabindex="37">                                                
@@ -276,12 +280,70 @@
                                       <label> Qty </label> 
                                           <input type="text" name="qty[4]" placeholder="Qty" class="form-control" value="0" ng-model="addJob.qty4" ng-init="addJob.qty4 = ''" tabindex="38">  
                                     </div>
-                            </div>    
-                        </div>
+                            </div>-->
+                            <div class="col-sm-1">
+                                <div class="form-group">
+                                    <label> Tie </label>
+                                    <input type="text" name="Tie" placeholder="Qty" class="form-control" value="0" ng-model="addJob.qtytie" ng-init="addJob.qtytie = ''" tabindex="42">
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="form-group">
+                                    <label> Belt </label>
+                                    <input type="text" name="Belt" placeholder="Qty" class="form-control" value="0" ng-model="addJob.qtybelt" ng-init="addJob.qtybelt = ''" tabindex="43">
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="form-group">
+                                    <label> Bow </label>
+                                    <input type="text" name="Bow" placeholder="Qty" class="form-control" value="0" ng-model="addJob.qtybow" ng-init="addJob.qtybow = ''" tabindex="44">
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="form-group">
+                                    <label> Cap </label>
+                                    <input type="text" name="Cap" placeholder="Qty" class="form-control" value="0" ng-model="addJob.qtycap" ng-init="addJob.qtycap = ''" tabindex="45">
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="form-group">
+                                    <label> Scarf </label>
+                                    <input type="text" name="Scarf" placeholder="Qty" class="form-control" value="0" ng-model="addJob.qtyscarf" ng-init="addJob.qtyscarf = ''" tabindex="46">
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="form-group">
+                                    <label> Apron </label>
+                                    <input type="text" name="Apron" placeholder="Qty" class="form-control" value="0" ng-model="addJob.qtyapron" ng-init="addJob.qtyapron = ''" tabindex="47">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-1">
+                                <div class="form-group">
+                                    <label> Coverall </label>
+                                    <input type="text" name="Coverall" placeholder="Qty" class="form-control" value="0" ng-model="addJob.qtycoverall" ng-init="addJob.qtyacoverall = ''" tabindex="48">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-1">
+                                <div class="form-group">
+                                    <label> Shoes </label>
+                                    <input type="text" name="Shoes" placeholder="Qty" class="form-control" value="0" ng-model="addJob.qtyshoes" ng-init="addJob.qtyshoes = ''" tabindex="49">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label> Other </label>
+                                    <input type="text" name="Other" placeholder="Qty" class="form-control" value="0" ng-model="addJob.qtyother" ng-init="addJob.qtyother = ''" tabindex="50">
+                                </div>
+                            </div>
+
                         <div class="divider"></div>
 
                         <div class="row">
-                           <div class="col-sm-4 col-offset-sm-2">
+                            <div class="col-sm-5 col-offset-sm-2"></div>
+                           <div class="col-sm-1 col-offset-sm-2">
                              <button class="red" ng-click="doAddjob(addJob)" data-ng-disabled="addJobForm.$invalid" tabindex="39">CREATE</button>
                            </div> 
                            <div class="col-sm-4 col-offset-sm-2">

@@ -41,10 +41,10 @@
                                              <span class="error-message" ng-show="editJobForm.name.$dirty && editJobForm.name.$error.required">Please enter name</span>
                                     </div>
                                     <div class="row">
-                                        <div class="col-sm-6">
+                                        <!--<div class="col-sm-6">
                                             <div class="form-group">
-                                             <!--<input type="text" name="location" id="location" tabindex="3"  class="form-control" placeholder="location" value="{{editJob.location}}" ng-model="editJob.location" required>
-                                                 <span class="error-message" ng-show="editJobForm.location.$dirty && editJobForm.location.$error.required">Please enter location</span>-->
+                                             &lt;!&ndash;<input type="text" name="location" id="location" tabindex="3"  class="form-control" placeholder="location" value="{{editJob.location}}" ng-model="editJob.location" required>
+                                                 <span class="error-message" ng-show="editJobForm.location.$dirty && editJobForm.location.$error.required">Please enter location</span>&ndash;&gt;
                                                 <input type="text" name="inv" id="inv" tabindex="9" class="form-control" placeholder="Enter Invoice" value="{{editJob.inv}}" ng-model="editJob.inv" required>
                                                 <span class="error-message" ng-show="editJobForm.inv.$dirty && editJobForm.inv.$error.required">Enter Invoice</span>
                                             </div> 
@@ -54,9 +54,13 @@
                                             <input type="text" name="do" id="do" tabindex="4" class="form-control" placeholder="Enter DO" value="{{editJob.do}}" ng-model="editJob.do" required>
                                                  <span class="error-message" ng-show="editJobForm.eid.$dirty && editJobForm.do.$error.required">Please enter Employee ID</span>
                                             </div>     
-                                         </div>    
-                                    </div>     
-                                                             
+                                         </div>   -->
+                                         <div class="col-sm-12">
+                                             <div class="form-group">
+                                                 <input type="text" name="slipno" id="slipno" tabindex="41" class="form-control" placeholder="Slip Number" value="{{editJob.slipno}}" ng-model="editJob.slipno" required>
+                                             </div>
+                                         </div>
+                                    </div>
                             </div>
                             <div class="col-sm-6"> 
                                    
@@ -129,11 +133,21 @@
                                        
                                        </div> 
                                         <div class="col-sm-6">
-                                         <div class="form-group">  <input type="text" name="qty[1]" placeholder="Qty" class="form-control" value="{{editJob.qty1}}" ng-model="editJob.qty1" tabindex="11" >
+                                         <div class="form-group">
+                                          <input type="text" name="qty[1]" placeholder="Qty" class="form-control" value="{{editJob.qty1}}" ng-model="editJob.qty1" tabindex="11" >
                                            <input type="hidden" value={{editJob.jobitemid1}} name="jobitemid" ng-model="editJob.jobitemsid1"> 
                                             <input type="hidden" value={{editJob.jobitemid2}} name="jobitemid" ng-model="editJob.jobitemsid2"> 
                                              <input type="hidden" value={{editJob.jobitemid3}} name="jobitemid" ng-model="editJob.jobitemsid3"> 
                                              <input type="hidden" value={{editJob.jobitemid4}} name="jobitemid" ng-model="editJob.jobitemid4"> 
+                                             <input type="hidden" value={{editJob.jobitemid7}} name="jobitemid" ng-model="editJob.jobitemid7">
+                                             <input type="hidden" value={{editJob.jobitemid8}} name="jobitemid" ng-model="editJob.jobitemid8">
+                                             <input type="hidden" value={{editJob.jobitemid9}} name="jobitemid" ng-model="editJob.jobitemid9">
+                                             <input type="hidden" value={{editJob.jobitemid10}} name="jobitemid" ng-model="editJob.jobitemid10">
+                                             <input type="hidden" value={{editJob.jobitemid11}} name="jobitemid" ng-model="editJob.jobitemid11">
+                                             <input type="hidden" value={{editJob.jobitemid12}} name="jobitemid" ng-model="editJob.jobitemid12">
+                                             <input type="hidden" value={{editJob.jobitemid13}} name="jobitemid" ng-model="editJob.jobitemid13">
+                                             <input type="hidden" value={{editJob.jobitemid14}} name="jobitemid" ng-model="editJob.jobitemid14">
+                                             <input type="hidden" value={{editJob.jobitemid15}} name="jobitemid" ng-model="editJob.jobitemid15">
                                          </div>
                                        </div> 
                                  </div>
@@ -185,7 +199,8 @@
                                         <select name="dressid" ng-model="editJob.dressid2" class="form-control" tabindex="20" >                                                
                                                 <option value="2" selected>Trouser</option>
                                                 <option value="5">Skirt</option>
-                                            </select>                                             
+                                                <option value="16">Cargo pants</option>
+                                            </select>
                                        </div> 
                                        <div class="col-sm-6">
                                          <div class="form-group">  <input type="text" name="qty[2]" value="{{editJob.qty2}}"placeholder="Qty" class="form-control" value="" ng-model="editJob.qty2" tabindex="21" ></div>
@@ -235,7 +250,8 @@
                                          <select name="dressid" ng-model="editJob.dressid3" class="form-control" tabindex="29">                                                
                                                 <option value="3" selected>Jacket</option>
                                                 <option value="6">Coat</option>
-                                            </select>    
+                                                <option value="17">Waist</option>
+                                            </select>
                                        </div> 
                                        <div class="col-sm-6">
                                          <div class="form-group">  <input type="text" name="qty[3]" placeholder="Qty" class="form-control" value="{{editJob.qty3}}" ng-model="editJob.qty3" tabindex="30"></div>
@@ -286,7 +302,7 @@
                              
                         </div> 
                         <div class="row vertical-divider">
-                            <div class="col-sm-4">
+                            <!--<div class="col-sm-4">
                                      <div class="form-group"> 
                                             <label> Others </label>
                                             <select name="dressid" ng-model="editJob.others" ng-init="editJob.others = '0'" class="form-control" tabindex="39">                                                
@@ -302,7 +318,64 @@
                                       <label> Qty </label> 
                                           <input type="text" name="qty[4]" placeholder="Qty" class="form-control" value="0" ng-model="editJob.qty4" ng-init="editJob.qty4 = ''" tabindex="40">  
                                     </div>
-                            </div>    
+                            </div> -->
+                            <div class="col-sm-1">
+                                <div class="form-group">
+                                    <label> Tie </label>
+                                    <input type="text" name="Tie" placeholder="Qty" class="form-control" value="0" ng-model="editJob.qtytie" ng-init="editJob.qtytie = ''" tabindex="42">
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="form-group">
+                                    <label> Belt </label>
+                                    <input type="text" name="Belt" placeholder="Qty" class="form-control" value="0" ng-model="editJob.qtybelt" ng-init="editJob.qtybelt = ''" tabindex="43">
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="form-group">
+                                    <label> Bow </label>
+                                    <input type="text" name="Bow" placeholder="Qty" class="form-control" value="0" ng-model="editJob.qtybow" ng-init="editJob.qtybow = ''" tabindex="44">
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="form-group">
+                                    <label> Cap </label>
+                                    <input type="text" name="Cap" placeholder="Qty" class="form-control" value="0" ng-model="editJob.qtycap" ng-init="editJob.qtycap = ''" tabindex="45">
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="form-group">
+                                    <label> Scarf </label>
+                                    <input type="text" name="Scarf" placeholder="Qty" class="form-control" value="0" ng-model="editJob.qtyscarf" ng-init="editJob.qtyscarf = ''" tabindex="46">
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="form-group">
+                                    <label> Apron </label>
+                                    <input type="text" name="Apron" placeholder="Qty" class="form-control" value="0" ng-model="editJob.qtyapron" ng-init="editJob.qtyapron = ''" tabindex="47">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-1">
+                                <div class="form-group">
+                                    <label> Coverall </label>
+                                    <input type="text" name="Coverall" placeholder="Qty" class="form-control" value="0" ng-model="editJob.qtycoverall" ng-init="editJob.qtyacoverall = ''" tabindex="48">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-1">
+                                <div class="form-group">
+                                    <label> Shoes </label>
+                                    <input type="text" name="Shoes" placeholder="Qty" class="form-control" value="0" ng-model="editJob.qtyshoes" ng-init="editJob.qtyshoes = ''" tabindex="49">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label> Other </label>
+                                    <input type="text" name="Other" placeholder="Qty" class="form-control" value="0" ng-model="editJob.qtyother" ng-init="editJob.qtyother = ''" tabindex="50">
+                                </div>
+                            </div>
                         </div>
                         <div class="divider"></div>
 

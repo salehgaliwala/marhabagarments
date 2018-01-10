@@ -59,7 +59,7 @@ app.controller('authCtrl', function ($scope, $rootScope, $routeParams, $location
             $location.path('addjobtype');
       };
      $scope.doAddjob = function (customer) {
-        //alert(JSON.stringify(customer));     
+        //alert(JSON.stringify(customer));
 
         Data.post('addjob', {
             customer: customer
@@ -107,8 +107,21 @@ app.controller('authCtrl', function ($scope, $rootScope, $routeParams, $location
                  $scope.addJob.item3.s12 = '';
                  $scope.addJob.item3.s13 = '';
 
-                 $scope.addJob.others = ''; 
-                 $scope.addJob.qty4 = ''; 
+                 $scope.addJob.qtytie = '';
+                 $scope.addJob.qtybelt = '';
+                 $scope.addJob.qtybow = '';
+                 $scope.addJob.qtycap = '';
+                 $scope.addJob.qtyscarf = '';
+                 $scope.addJob.qtyapron = '';
+                 $scope.addJob.qtycoverall = '';
+                 $scope.addJob.qtyshoes = '';
+                 $scope.addJob.qtyother = '';
+                 $scope.addJob.slipno = '';
+
+/*                 $scope.addJob.others = '';
+                 $scope.addJob.qty4 = ''; */
+
+
             }
             else
             {
@@ -134,10 +147,12 @@ app.controller('authCtrl', function ($scope, $rootScope, $routeParams, $location
         });
     };
     
-    $scope.doAddLpo = function (lpo) {
+    $scope.doAddLpo = function (lpo,dress) {
        // alert(JSON.stringify(customer));
+       alert(JSON.stringify(lpo));
+       alert(JSON.stringify(dress));
         Data.post('addlpo', {
-            lpo: lpo
+            lpo: lpo, dress :dress
         }).then(function (results) {
           //  alert(JSON.stringify(results));
             Data.toast(results);
@@ -155,6 +170,21 @@ app.controller('authCtrl', function ($scope, $rootScope, $routeParams, $location
         });
     };
 
+
+    //for same scope dress id
+    $scope.dresses = [{id: 'dress1'}, {id: 'dress2'}];
+
+    $scope.addNewChoice = function () {
+        var newItemNo = $scope.dresses.length + 1;
+        $scope.dresses.push({'id': 'dress' + newItemNo});
+    };
+
+    $scope.removeChoice = function () {
+        var lastItem = $scope.dresses.length - 1;
+        $scope.dresses.splice(lastItem);
+    };
+    // Dress id lpo end
+
     $scope.doAddJobType = function (jobtype) {
        // alert(JSON.stringify(customer));
         Data.post('addjobtype', {
@@ -162,7 +192,7 @@ app.controller('authCtrl', function ($scope, $rootScope, $routeParams, $location
         }).then(function (results) {
           //  alert(JSON.stringify(results));
             Data.toast(results);
-            
+
             if (results.status == "success") {
                 $scope.messages = 'Job Type Added';
                // alert($scope.messages);
@@ -204,7 +234,7 @@ app.controller('authCtrl', function ($scope, $rootScope, $routeParams, $location
     };
 
     $scope.doAddLocation = function (location) {
-        // alert(JSON.stringify(customer));
+        // locationalert(JSON.stringify(location));
         Data.post('addlocation', {
             location: location
         }).then(function (results) {

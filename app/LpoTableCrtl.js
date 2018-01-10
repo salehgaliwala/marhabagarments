@@ -93,35 +93,3 @@ app.controller('lpocrtljob',[
         }             
     }
 ]);
-
-app.controller('EditLpoControler',[
-  '$scope','$http','$location','$routeParams',
-  function ($scope, $http, $location, $routeParams) {
-      var id = $routeParams.id;
-      var obj = {};
-      $http.get('api/v1/editlpo/'+id).then(function(results) {
-           // alert(JSON.stringify(results));
-            obj.get = results.data;
-           $scope.editlpos = obj;
-  });
-
-$scope.saveLpo = function (lpo) {
-       // alert(JSON.stringify(signup));
-       $http.post('api/v1/savelpo', {
-            lpo: lpo
-        }).then(function (results) {
-          // alert(JSON.stringify(results));
-            //Data.toast(results);
-           // $scope.companies = results;
-            // alert(results.data.status);
-            if (results.data.status == "success") {
-            
-               $scope.messages = 'Lpo Saved';
-               $location.path('lpo');
-
-            }
-        });
-    };    
-     
-  }
-]);

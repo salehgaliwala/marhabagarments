@@ -26,7 +26,7 @@ app.config(['$routeProvider',
             .when('/addlpo', {
                 title: 'Addlpo',
                 templateUrl: 'partials/addlpo.html',
-                controller: 'authCtrl'
+                controller: 'lpoAddEditCtrl'
             })
             .when('/addjobtype', {
                 title: 'AddJobType',
@@ -61,7 +61,7 @@ app.config(['$routeProvider',
              .when('/editlpo/:id',
               {
                 templateUrl: 'partials/editlpo.html',
-                controller: 'EditLpoControler'
+                controller: 'lpoAddEditCtrl'
             })
              .when('/edituser/:id',
               {

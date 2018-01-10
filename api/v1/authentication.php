@@ -65,9 +65,16 @@ $app->get('/lpo', function() {
                                     lpo.belt,
                                     lpo.bow,
                                     lpo.cap,
+                                    lpo.scarf,
+                                    lpo.apron,
+                                    lpo.coverall,
+                                    lpo.shoes,
+                                    lpo.other,
+                                    lpo.cargo_pants,
+                                    lpo.waist,
                                     lpo.companyid,
                                     company.companyname,
-                                    (lpo.shirts + lpo.trousers + lpo.jackets + lpo.tshirt + lpo.skirt + lpo.coat + lpo.tie + lpo.belt + lpo.bow + lpo.cap ) AS total
+                                    (lpo.shirts + lpo.trousers + lpo.jackets + lpo.tshirt + lpo.skirt + lpo.coat + lpo.tie + lpo.belt + lpo.bow + lpo.cap + lpo.scarf + lpo.apron + lpo.coverall + lpo.shoes + lpo.other + lpo.cargo_pants + lpo.waist ) AS total
                                     FROM
                                     lpo
                                     Inner Join company ON lpo.companyid = company.companyid where lpo.isdelete = 'N'");
@@ -206,13 +213,17 @@ $app->get('/editcompany/:id', function($companyid){
         echoResponse(200, $response);
 });
 
-$app->get('/editlpo/:id', function($lpoid){
+$app->get('/editlpo/:lponum', function($lponum){
 
   $db = new DbHandler();
         $response = array();
         session_start();
-        if($_SESSION['role'] == 0)
-        $response=$db->geteditrecords("select * from lpo where isdelete ='N' and id ='$lpoid'"); 
+        if($_SESSION['role'] == 0){
+
+        $response=$db->getAllRecord("select * from lpo where isdelete ='N' and lponum ='$lponum'");
+
+
+        }
         echoResponse(200, $response);
 });
 
@@ -220,7 +231,7 @@ $app->get('/editjobtype/:id', function($jobtypeid){
 
   $db = new DbHandler();
         $response = array();
-        $response=$db->geteditrecords("select * from jobtype where isdelete ='N' and jobtypeid ='$jobtypeid'"); 
+        $response=$db->geteditrecords("select * from jobtype where isdelete ='N' and jobtypeid ='$jobtypeid'");
         echoResponse(200, $response);
     
 });
@@ -257,10 +268,18 @@ $response = array();
 $db = new DbHandler();
 $db->ifrecordexist('lponum',$r->lpo->lponum,'lpo','companyid', $r->lpo->companyid); 
 $tabble_name = "lpo";
-$column_names = array('lponum', 'companyid', 'shirts' , 'trousers' , 'jackets' , 'tshirt' , 'skirt', 'coat', 'tie' , 'belt' , 'bow', 'cap');
+//$column_names = array('lponum', 'companyid', 'shirts' , 'trousers' , 'jackets' , 'tshirt' , 'skirt', 'coat', 'tie' , 'belt' , 'bow', 'cap');
+$column_names = array('lponum', 'companyid','jobtype','location','dressid' , 'qty');
 
-if($_SESSION['role'] == 0)
-$result = $db->insertIntoTable($r->lpo, $column_names, $tabble_name);
+foreach ($r->dress as $dress ){
+
+    $r->lpo->dressid = $dress->dressid;
+    $r->lpo->qty = $dress->qty;
+    $r->lpo->jobtype = $dress->jobtype;
+    if($_SESSION['role'] == 0)
+        $result = $db->insertIntoTable($r->lpo, $column_names, $tabble_name);
+}
+
 if ($result != NULL) {
             $response["status"] = "success";
             $response["message"] = "LPO saved successfully";         
@@ -295,11 +314,17 @@ if ($result != NULL) {
 });
 
 $app->post('/savelpo', function() use ($app) {
+
+    session_start();
 $r = json_decode($app->request->getBody());
 $db = new DbHandler();
 $response = array();
-$result=$db->DelRecord("Update lpo SET lponum = '".$r->lpo->lponum."' where id = '".$r->lpo->id."'"); 
-$result=$db->DelRecord("Update lpo SET companyid = '".$r->lpo->companyid."' where id = '".$r->lpo->id."'"); 
+
+if($r->lpo[0]->lponum != $r->plponum)
+$db->ifrecordexist('lponum',$r->lpo[0]->lponum,'lpo','companyid', $r->lpo[0]->companyid);
+
+//$result=$db->DelRecord("Update lpo SET lponum = '".$r->lpo->lponum."' where id = '".$r->lpo->id."'");
+/*$result=$db->DelRecord("Update lpo SET companyid = '".$r->lpo->companyid."' where id = '".$r->lpo->id."'");
 $result=$db->DelRecord("Update lpo SET shirts = '".$r->lpo->shirts."' where id = '".$r->lpo->id."'"); 
 $result=$db->DelRecord("Update lpo SET trousers = '".$r->lpo->trousers."' where id = '".$r->lpo->id."'"); 
 $result=$db->DelRecord("Update lpo SET jackets = '".$r->lpo->jackets."' where id = '".$r->lpo->id."'"); 
@@ -309,7 +334,33 @@ $result=$db->DelRecord("Update lpo SET coat = '".$r->lpo->coat."' where id = '".
 $result=$db->DelRecord("Update lpo SET tie = '".$r->lpo->tie."' where id = '".$r->lpo->id."'");
 $result=$db->DelRecord("Update lpo SET belt = '".$r->lpo->belt."' where id = '".$r->lpo->id."'");
 $result=$db->DelRecord("Update lpo SET bow = '".$r->lpo->bow."' where id = '".$r->lpo->id."'");
-$result=$db->DelRecord("Update lpo SET cap = '".$r->lpo->cap."' where id = '".$r->lpo->id."'");
+$result=$db->DelRecord("Update lpo SET cap = '".$r->lpo->cap."' where id = '".$r->lpo->id."'");*/
+
+    $result=$db->DelRecord("Update lpo SET companyid = '".$r->lpo[0]->companyid."' where lponum = '".$r->plponum."'");
+    $result=$db->DelRecord("Update lpo SET location = '".$r->lpo[0]->location."' where lponum = '".$r->plponum."'");
+    $result=$db->DelRecord("Update lpo SET lponum = '".$r->lpo[0]->lponum."' where lponum = '".$r->plponum."'");
+
+    foreach ($r->dress as $dress ){
+
+        if(isset($dress->lpoid)){
+        $result = $db->DelRecord("Update lpo SET dressid = '".$dress->dressid."' where id = '".$dress->lpoid."'");
+        $result = $db->DelRecord("Update lpo SET qty = '".$dress->qty."' where id = '".$dress->lpoid."'");
+        $result = $db->DelRecord("Update lpo SET jobtype = '".$dress->jobtype."' where id = '".$dress->lpoid."'");
+        }
+        else {
+            $tabble_name = "lpo";
+            $column_names = array('lponum', 'companyid', 'jobtype', 'location', 'dressid', 'qty');
+
+            $r->lpo[0]->dressid = $dress->dressid;
+            $r->lpo[0]->qty = $dress->qty;
+            $r->lpo[0]->jobtype = $dress->jobtype;
+            $r->lpo[0]->lponum = $r->plponum;
+
+            if ($_SESSION['role'] == 0)
+                $result = $db->insertIntoTable($r->lpo[0], $column_names, $tabble_name);
+        }
+    }
+
 
 if ($result != NULL) {
             $response["status"] = "success";
@@ -463,7 +514,7 @@ $app->get('/editjob/:id', function($jobid){
         $db = new DbHandler();
         $response = array();
         //$temp = array();
-        $responsejobs=$db->geteditrecords("select jobid,company,name,eid,po,gender,location,jobtype,do,inv from jobs where jobid='$jobid'"); 
+        $responsejobs=$db->geteditrecords("select jobid,company,name,eid,po,gender,location,jobtype,do,inv,slipno from jobs where jobid='$jobid'");
        // echo $responsejobs['jobid'];
         $responsejobitems=$db->getAllRecord("select jobitemid,dressid, qty, status from jobitems where jobid='$jobid'");
             
@@ -488,7 +539,7 @@ $app->get('/editjob/:id', function($jobid){
               
             }   
 
-            if($responsejobitem['dressid'] == 2 or $responsejobitem['dressid'] == 5)
+            if($responsejobitem['dressid'] == 2 or $responsejobitem['dressid'] == 5 or $responsejobitem['dressid'] == 16)
             {
               $temp['qty2']  = $responsejobitem['qty'];
               $temp['dressid2'] = $responsejobitem['dressid'];
@@ -507,7 +558,7 @@ $app->get('/editjob/:id', function($jobid){
               
             }  
 
-            if($responsejobitem['dressid'] == 3 or $responsejobitem['dressid'] == 6)
+            if($responsejobitem['dressid'] == 3 or $responsejobitem['dressid'] == 6 or $responsejobitem['dressid'] == 17)
             {
               $temp['qty3']  = $responsejobitem['qty'];
 
@@ -526,13 +577,68 @@ $app->get('/editjob/:id', function($jobid){
                 }
               
             }
-            if($responsejobitem['dressid'] == 7 or $responsejobitem['dressid'] == 8 || $responsejobitem['dressid'] == 9 || $responsejobitem['dressid'] == 10)
+            /*if($responsejobitem['dressid'] == 7 or $responsejobitem['dressid'] == 8 || $responsejobitem['dressid'] == 9 || $responsejobitem['dressid'] == 10)
             {
                  $temp['qty4']  = $responsejobitem['qty'];
                  $temp['others'] = $responsejobitem['dressid'];
                  $jobitemsid = $responsejobitem['jobitemid']; 
                  $temp['jobitemsid4'] = $jobitemsid;   
-            }    
+            }*/
+
+            if($responsejobitem['dressid'] == 7)
+            {
+                $temp['qtytie']  = $responsejobitem['qty'];
+                $jobitemsid = $responsejobitem['jobitemid'];
+                $temp['jobitemsid7'] = $jobitemsid;
+            }
+            if($responsejobitem['dressid'] == 8)
+            {
+                $temp['qtybelt']  = $responsejobitem['qty'];
+                $jobitemsid = $responsejobitem['jobitemid'];
+                $temp['jobitemsid8'] = $jobitemsid;
+            }
+            if($responsejobitem['dressid'] == 9)
+            {
+                $temp['qtybow']  = $responsejobitem['qty'];
+                $jobitemsid = $responsejobitem['jobitemid'];
+                $temp['jobitemsid9'] = $jobitemsid;
+            }
+            if($responsejobitem['dressid'] == 10)
+            {
+                $temp['qtycap']  = $responsejobitem['qty'];
+                $jobitemsid = $responsejobitem['jobitemid'];
+                $temp['jobitemsid10'] = $jobitemsid;
+            }
+            if($responsejobitem['dressid'] == 11)
+            {
+                $temp['qtyscarf']  = $responsejobitem['qty'];
+                $jobitemsid = $responsejobitem['jobitemid'];
+                $temp['jobitemsid11'] = $jobitemsid;
+            }
+            if($responsejobitem['dressid'] == 12)
+            {
+                $temp['qtyapron']  = $responsejobitem['qty'];
+                $jobitemsid = $responsejobitem['jobitemid'];
+                $temp['jobitemsid12'] = $jobitemsid;
+            }
+            if($responsejobitem['dressid'] == 13)
+            {
+                $temp['qtycoverall']  = $responsejobitem['qty'];
+                $jobitemsid = $responsejobitem['jobitemid'];
+                $temp['jobitemsid13'] = $jobitemsid;
+            }
+            if($responsejobitem['dressid'] == 14)
+            {
+                $temp['qtyshoes']  = $responsejobitem['qty'];
+                $jobitemsid = $responsejobitem['jobitemid'];
+                $temp['jobitemsid14'] = $jobitemsid;
+            }
+            if($responsejobitem['dressid'] == 15)
+            {
+                $temp['qtyother']  = $responsejobitem['qty'];
+                $jobitemsid = $responsejobitem['jobitemid'];
+                $temp['jobitemsid15'] = $jobitemsid;
+            }
 
         }
                 
@@ -572,7 +678,7 @@ $r = json_decode($app->request->getBody());
 verifyRequiredParams(array('name', 'eid' , 'po' ,'gender'),$r->customer);
 $response = array();
 $db = new DbHandler();
-$response=$db->DelRecord("Update jobs SET name = '".$r->customer->name."' , company = '".$r->customer->company."', location = '".$r->customer->location."', jobtype = '".$r->customer->jobtype."', gender='".$r->customer->gender."', eid = '".$r->customer->eid."' , do = '".$r->customer->do."' , inv = '".$r->customer->inv."' where jobid = '".$r->customer->jobid."'"); 
+$response=$db->DelRecord("Update jobs SET name = '".$r->customer->name."' , company = '".$r->customer->company."', location = '".$r->customer->location."', jobtype = '".$r->customer->jobtype."', gender='".$r->customer->gender."', eid = '".$r->customer->eid."' , do = '".$r->customer->do."' , inv = '".$r->customer->inv."', slipno = '".$r->customer->slipno."' where jobid = '".$r->customer->jobid."'");
 // Now we update the dress id and qty
 if(!empty($r->customer->jobitemsid1))
 $response=$db->DelRecord("Update jobitems SET dressid = '".$r->customer->dressid1."' where jobitemid = '".$r->customer->jobitemsid1."'"); 
@@ -622,7 +728,35 @@ if(!empty($r->customer->jobitemsid3)){
         $response=$db->DelRecord("Update jobitemsmeasurements SET value = '".$recval."' where measurementid = '". $measurementid."' and jobitemsid = '".$r->customer->jobitemsid3."'");
            
         }    
-}     
+}
+
+    if(!empty($r->customer->jobitemsid7))
+        $response=$db->DelRecord("Update jobitems SET qty   = '".$r->customer->qtytie."' where jobitemid = '".$r->customer->jobitemsid7."'");
+
+    if(!empty($r->customer->jobitemsid8))
+        $response=$db->DelRecord("Update jobitems SET qty   = '".$r->customer->qtybelt."' where jobitemid = '".$r->customer->jobitemsid8."'");
+
+    if(!empty($r->customer->jobitemsid9))
+        $response=$db->DelRecord("Update jobitems SET qty   = '".$r->customer->qtybow."' where jobitemid = '".$r->customer->jobitemsid9."'");
+
+    if(!empty($r->customer->jobitemsid10))
+        $response=$db->DelRecord("Update jobitems SET qty   = '".$r->customer->qtycap."' where jobitemid = '".$r->customer->jobitemsid10."'");
+
+    if(!empty($r->customer->jobitemsid11))
+        $response=$db->DelRecord("Update jobitems SET qty   = '".$r->customer->qtyscarf."' where jobitemid = '".$r->customer->jobitemsid11."'");
+
+    if(!empty($r->customer->jobitemsid12))
+        $response=$db->DelRecord("Update jobitems SET qty   = '".$r->customer->qtyapron."' where jobitemid = '".$r->customer->jobitemsid12."'");
+
+    if(!empty($r->customer->jobitemsid13))
+        $response=$db->DelRecord("Update jobitems SET qty   = '".$r->customer->qtycoverall."' where jobitemid = '".$r->customer->jobitemsid13."'");
+
+    if(!empty($r->customer->jobitemsid14))
+        $response=$db->DelRecord("Update jobitems SET qty   = '".$r->customer->qtyshoes."' where jobitemid = '".$r->customer->jobitemsid14."'");
+
+    if(!empty($r->customer->jobitemsid15))
+        $response=$db->DelRecord("Update jobitems SET qty   = '".$r->customer->qtyother."' where jobitemid = '".$r->customer->jobitemsid15."'");
+
    $result["status"] = "success";
 echoResponse(200,$result);
 });
@@ -680,7 +814,21 @@ function validateLpoQty($customer){
         if( $qtySum['qtySum'] + $customer ->qty3 > $lpo_values['coat'] )
         $err .= 'Coat ';
     }
-    if($customer->others == 7 && $customer->qty4 != 0)
+
+    if($customer->dressid2 == 16 && $customer->qty2 != 0)
+    {
+        $qtySum  = $db->getOneRecord("SELECT COALESCE(sum(qty),0) As qtySum from jobitems where jobid IN(".$jobIDs.") AND dressid = '16'");
+        if( $qtySum['qtySum'] + $customer ->qty2 > $lpo_values['cargo_pants'] )
+        $err .= 'Cargo Pants ';
+    }
+
+    if($customer->dressid3 == 17 && $customer->qty3 != 0)
+    {
+        $qtySum  = $db->getOneRecord("SELECT COALESCE(sum(qty),0) As qtySum from jobitems where jobid IN(".$jobIDs.") AND dressid = '17'");
+        if( $qtySum['qtySum'] + $customer ->qty3 > $lpo_values['waist'] )
+        $err .= 'Waist ';
+    }
+    /*if($customer->others == 7 && $customer->qty4 != 0)
     {
         $qtySum  = $db->getOneRecord("SELECT COALESCE(sum(qty),0) As qtySum from jobitems where jobid IN(".$jobIDs.") AND dressid = '7'");
         if( $qtySum['qtySum'] + $customer ->qty4 > $lpo_values['tie'] )
@@ -703,6 +851,61 @@ function validateLpoQty($customer){
         $qtySum  = $db->getOneRecord("SELECT COALESCE(sum(qty),0) As qtySum from jobitems where jobid IN(".$jobIDs.") AND dressid = '10'");
         if( $qtySum['qtySum'] + $customer ->qty4 > $lpo_values['cap'] )
         $err .= 'Cap ';
+    }*/
+
+    if($customer->qtytie != 0)
+    {
+        $qtySum  = $db->getOneRecord("SELECT COALESCE(sum(qty),0) As qtySum from jobitems where jobid IN(".$jobIDs.") AND dressid = '7'");
+        if( $qtySum['qtySum'] + $customer ->qtytie > $lpo_values['tie'] )
+            $err .= 'Tie ';
+    }
+    if($customer->qtybelt != 0)
+    {
+        $qtySum  = $db->getOneRecord("SELECT COALESCE(sum(qty),0) As qtySum from jobitems where jobid IN(".$jobIDs.") AND dressid = '8'");
+        if( $qtySum['qtySum'] + $customer ->qtybelt > $lpo_values['belt'] )
+            $err .= 'Belt ';
+    }
+    if($customer->qtybow != 0)
+    {
+        $qtySum  = $db->getOneRecord("SELECT COALESCE(sum(qty),0) As qtySum from jobitems where jobid IN(".$jobIDs.") AND dressid = '9'");
+        if( $qtySum['qtySum'] + $customer ->qtybow > $lpo_values['bow'] )
+            $err .= 'Bow ';
+    }
+    if($customer->qtycap != 0)
+    {
+        $qtySum  = $db->getOneRecord("SELECT COALESCE(sum(qty),0) As qtySum from jobitems where jobid IN(".$jobIDs.") AND dressid = '10'");
+        if( $qtySum['qtySum'] + $customer ->qtycap > $lpo_values['cap'] )
+            $err .= 'Cap ';
+    }
+    if($customer->qtyscarf != 0)
+    {
+        $qtySum  = $db->getOneRecord("SELECT COALESCE(sum(qty),0) As qtySum from jobitems where jobid IN(".$jobIDs.") AND dressid = '11'");
+        if( $qtySum['qtySum'] + $customer ->qtyscarf > $lpo_values['scarf'] )
+            $err .= 'Scarf ';
+    }
+    if($customer->qtyapron != 0)
+    {
+        $qtySum  = $db->getOneRecord("SELECT COALESCE(sum(qty),0) As qtySum from jobitems where jobid IN(".$jobIDs.") AND dressid = '12'");
+        if( $qtySum['qtySum'] + $customer ->qtyapron > $lpo_values['apron'] )
+            $err .= 'Apron ';
+    }
+    if($customer->qtycoverall != 0)
+    {
+        $qtySum  = $db->getOneRecord("SELECT COALESCE(sum(qty),0) As qtySum from jobitems where jobid IN(".$jobIDs.") AND dressid = '13'");
+        if( $qtySum['qtySum'] + $customer ->qtycoverall > $lpo_values['coverall'] )
+            $err .= 'Coverall ';
+    }
+    if($customer->qtyshoes != 0)
+    {
+        $qtySum  = $db->getOneRecord("SELECT COALESCE(sum(qty),0) As qtySum from jobitems where jobid IN(".$jobIDs.") AND dressid = '14'");
+        if( $qtySum['qtySum'] + $customer ->qtyshoes > $lpo_values['shoes'] )
+            $err .= 'Shoes ';
+    }
+    if($customer->qtyother != 0)
+    {
+        $qtySum  = $db->getOneRecord("SELECT COALESCE(sum(qty),0) As qtySum from jobitems where jobid IN(".$jobIDs.") AND dressid = '15'");
+        if( $qtySum['qtySum'] + $customer ->qtyother > $lpo_values['other'] )
+            $err .= 'Other ';
     }
 
     return $err;
@@ -716,6 +919,7 @@ $r = json_decode($app->request->getBody());
 
 //calling lpo check func
 $lpocheck = validateLpoQty($r->customer);
+//$lpocheck = '';
 $result = null;
 
 verifyRequiredParams(array('name', 'eid' , 'po' ,'gender'),$r->customer);
@@ -726,7 +930,7 @@ $response = array();
 
     $db = new DbHandler();
     $tabble_name = "jobs";
-    $column_names = array('company', 'name', 'eid', 'po', 'gender', 'jobtype','location');
+    $column_names = array('company', 'name', 'eid', 'po', 'gender', 'jobtype','location','slipno');
     $result = $db->insertIntoTable($r->customer, $column_names, $tabble_name);
     $show = $result;
 
@@ -792,13 +996,79 @@ $response = array();
 
     }
 
-    if ($r->customer->qty4 != '') {
+    /*if ($r->customer->qty4 != '') {
         $tabble_name = "jobitems";
         $column_names = array('jobid', 'dressid', 'qty');
         $r->customer->dressid = $r->customer->others;
         $r->customer->qty = $r->customer->qty4;
         $result = $db->insertIntoTable($r->customer, $column_names, $tabble_name);
+    }*/
+
+
+    if ($r->customer->qtytie != '') {
+        $tabble_name = "jobitems";
+        $column_names = array('jobid', 'dressid', 'qty');
+        $r->customer->dressid = '7';
+        $r->customer->qty = $r->customer->qtytie;
+        $result = $db->insertIntoTable($r->customer, $column_names, $tabble_name);
     }
+    if ($r->customer->qtybelt != '') {
+        $tabble_name = "jobitems";
+        $column_names = array('jobid', 'dressid', 'qty');
+        $r->customer->dressid = '8';
+        $r->customer->qty = $r->customer->qtybelt;
+        $result = $db->insertIntoTable($r->customer, $column_names, $tabble_name);
+    }
+    if ($r->customer->qtybow != '') {
+        $tabble_name = "jobitems";
+        $column_names = array('jobid', 'dressid', 'qty');
+        $r->customer->dressid = '9';
+        $r->customer->qty = $r->customer->qtybow;
+        $result = $db->insertIntoTable($r->customer, $column_names, $tabble_name);
+    }
+    if ($r->customer->qtycap != '') {
+        $tabble_name = "jobitems";
+        $column_names = array('jobid', 'dressid', 'qty');
+        $r->customer->dressid = '10';
+        $r->customer->qty = $r->customer->qtycap;
+        $result = $db->insertIntoTable($r->customer, $column_names, $tabble_name);
+    }
+    if ($r->customer->qtyscarf != '') {
+        $tabble_name = "jobitems";
+        $column_names = array('jobid', 'dressid', 'qty');
+        $r->customer->dressid = '11';
+        $r->customer->qty = $r->customer->qtyscarf;
+        $result = $db->insertIntoTable($r->customer, $column_names, $tabble_name);
+    }
+    if ($r->customer->qtyapron != '') {
+        $tabble_name = "jobitems";
+        $column_names = array('jobid', 'dressid', 'qty');
+        $r->customer->dressid = '12';
+        $r->customer->qty = $r->customer->qtyapron;
+        $result = $db->insertIntoTable($r->customer, $column_names, $tabble_name);
+    }
+    if ($r->customer->qtycoverall != '') {
+        $tabble_name = "jobitems";
+        $column_names = array('jobid', 'dressid', 'qty');
+        $r->customer->dressid = '13';
+        $r->customer->qty = $r->customer->qtycoverall;
+        $result = $db->insertIntoTable($r->customer, $column_names, $tabble_name);
+    }
+    if ($r->customer->qtyshoes != '') {
+        $tabble_name = "jobitems";
+        $column_names = array('jobid', 'dressid', 'qty');
+        $r->customer->dressid = '14';
+        $r->customer->qty = $r->customer->qtyshoes;
+        $result = $db->insertIntoTable($r->customer, $column_names, $tabble_name);
+    }
+    if ($r->customer->qtyother != '') {
+        $tabble_name = "jobitems";
+        $column_names = array('jobid', 'dressid', 'qty');
+        $r->customer->dressid = '15';
+        $r->customer->qty = $r->customer->qtyother;
+        $result = $db->insertIntoTable($r->customer, $column_names, $tabble_name);
+    }
+
     }
 if ($result != NULL) {
             $response["status"] = "success";
@@ -976,6 +1246,18 @@ $app->get('/populatelocationbyid/:locationid', function($locationid){
     $db = new DbHandler();
     $response = array();
     $response=$db->getAllRecord("SELECT * from location where locationid='$locationid'");
+    echoResponse(200, $response);
+});
+
+
+
+//Dresses
+
+
+$app->get('/dresses', function(){
+    $db = new DbHandler();
+    $response = array();
+    $response=$db->getAllRecord("SELECT * FROM dresses");
     echoResponse(200, $response);
 });
 ?>
