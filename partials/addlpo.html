@@ -52,10 +52,10 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div ng-app="angularjs-starter">
-                                    <fieldset data-ng-repeat="dress in dresses" class="row">
+                                <div ng-app="angularjs-starter" data-ng-init="addNewChoice()">
+                                    <fieldset data-ng-repeat="dress in dresses" class="row" >
                                         <div class="col-sm-2 col-sm-offset-1">
-                                        <select ng-model="dress.dressid" class="form-control" data-ng-init="populatedress();">
+                                        <select ng-model="dress.dressid" class="form-control" data-ng-init="populatedress();" required>
                                             <option value="" selected disabled>Select a Dress</option>
                                             <option ng-repeat="x in dresslist" value="{{x.dressid}}">{{x.dressname}}</option>
                                         </select>
@@ -72,7 +72,7 @@
                                         </div>
                                         <div class="col-sm-2">
                                             <input type="text" class="form-control  dress-input" placeholder="Qty"
-                                                   name="lponumber" ng-model="dress.qty" focus/>
+                                                   name="lponumber" ng-model="dress.qty" required focus/>
                                             <button class="remove" ng-show="$last" ng-click="removeChoice()" style="
                                                                                                                     background: #C76868;
                                                                                                                     color: #FFF;
@@ -90,9 +90,6 @@
                                             </button>
                                         </div>
                                     </fieldset>
-                                    <!--<div id="choicesDisplay">
-                                        {{ dresses }}
-                                    </div>-->
                                 </div>
                             </div>
                             <!--<div class="row">

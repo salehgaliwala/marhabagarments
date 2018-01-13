@@ -30,91 +30,73 @@
                     <form name="editJobForm" id="editJob" role="form" ng-repeat="editJob in editJobs" novalidate>
                         <div class="row">
                             <div class="col-sm-6">
-                                
-                                  <div class="form-group">  
-                                         <input type="text" name="eid" id="eid" tabindex="1" class="form-control" placeholder="Employee ID" value="{{editJob.eid}}" ng-model="editJob.eid" required>
-                                             <span class="error-message" ng-show="editJobForm.eid.$dirty && editJobForm.eid.$error.required">Please enter Employee ID</span>
-                                  </div>  
-                               
-                                     <div class="form-group">
-                                         <input type="text" name="name" id="name" tabindex="2" class="form-control" placeholder="Name" value="{{editJob.name}}" ng-model="editJob.name" required>
-                                             <span class="error-message" ng-show="editJobForm.name.$dirty && editJobForm.name.$error.required">Please enter name</span>
+                                <div class="form-group">
+                                    <input type="text" name="eid" id="eid" tabindex="1" class="form-control" placeholder="Employee ID" value="{{editJob.eid}}" ng-model="editJob.eid" required>
+                                    <span class="error-message" ng-show="editJobForm.eid.$dirty && editJobForm.eid.$error.required">Please enter Employee ID</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" name="name" id="name" tabindex="2" class="form-control" placeholder="Name" value="{{editJob.name}}" ng-model="editJob.name" required>
+                                    <span class="error-message" ng-show="editJobForm.name.$dirty && editJobForm.name.$error.required">Please enter name</span>
+                                </div>
+                                <div class="form-group">
+                                    <!--<span class="error-message" ng-show="addJobForm.location.$dirty && addJobForm.location.$error.required">Please enter location</span>
+                                <input type="text" name="location" id="location" tabindex="3" class="form-control" placeholder="location" value="" ng-model="addJob.location" required>-->
+                                    <input type="text" name="slipno" id="slipno" tabindex="3" class="form-control" placeholder="Slip Number" value="{{editJob.slipno}}" ng-model="editJob.slipno" required>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row" ng-controller="companycrtl">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <select ng-model="editJob.company" class="form-control"  tabindex="4">
+                                                    <option ng-repeat="x in companies" value="{{x.companyid}}">{{x.companyname}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <select name="gender" ng-model="editJob.gender" class="form-control" tabindex="5" >
+                                                    <option value="" disabled>Select Gender</option>
+                                                    <option value="M" selected="selected">Male</option>
+                                                    <option value="F">Female</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-controller="lpocrtljob">
+                                        <select ng-init="populatelpobynum(editJob.po)" ng-model="editJob.po" class="form-control" ng-click="populatelpos(editJob.company)" tabindex="6">
+                                            <option value="" disabled selected> Select LPO </option>
+                                            <option ng-repeat="x in lpos" value="{{x.lponum}}">{{x.lponum}}</option>
+                                        </select>
                                     </div>
                                     <div class="row">
-                                        <!--<div class="col-sm-6">
-                                            <div class="form-group">
-                                             &lt;!&ndash;<input type="text" name="location" id="location" tabindex="3"  class="form-control" placeholder="location" value="{{editJob.location}}" ng-model="editJob.location" required>
-                                                 <span class="error-message" ng-show="editJobForm.location.$dirty && editJobForm.location.$error.required">Please enter location</span>&ndash;&gt;
-                                                <input type="text" name="inv" id="inv" tabindex="9" class="form-control" placeholder="Enter Invoice" value="{{editJob.inv}}" ng-model="editJob.inv" required>
-                                                <span class="error-message" ng-show="editJobForm.inv.$dirty && editJobForm.inv.$error.required">Enter Invoice</span>
-                                            </div> 
-                                        </div>     
-                                         <div class="col-sm-6" >
-                                           <div class="form-group">
-                                            <input type="text" name="do" id="do" tabindex="4" class="form-control" placeholder="Enter DO" value="{{editJob.do}}" ng-model="editJob.do" required>
-                                                 <span class="error-message" ng-show="editJobForm.eid.$dirty && editJobForm.do.$error.required">Please enter Employee ID</span>
-                                            </div>     
-                                         </div>   -->
-                                         <div class="col-sm-12">
-                                             <div class="form-group">
-                                                 <input type="text" name="slipno" id="slipno" tabindex="41" class="form-control" placeholder="Slip Number" value="{{editJob.slipno}}" ng-model="editJob.slipno" required>
-                                             </div>
-                                         </div>
-                                    </div>
-                            </div>
-                            <div class="col-sm-6"> 
-                                   
-                                <div class="row" ng-controller="companycrtl">
-
-                                         <div class="col-sm-6" >
-                                            <div class="form-group" >
-                                                <select ng-model="editJob.company" class="form-control"  tabindex="6">
-                                                     <option ng-repeat="x in companies" value="{{x.companyid}}">{{x.companyname}}</option>
-                                                </select>   
-                                             </div>    
-                                         </div>
-
                                         <div class="col-sm-6">
-                                          <div class="form-group">
-                                            <select name="gender" ng-model="editJob.gender" class="form-control" tabindex="5" >
-                                                <option value="" disabled>Select Gender</option>
-                                                <option value="M" selected="selected">Male</option>
-                                                <option value="F">Female</option>
-                                            </select>
-                                          </div>
+                                            <div class="form-group">
+                                                <select ng-init = "populatejobtypesbyid(editJob.jobtype)" ng-model="editJob.jobtype" name="jobtype" tabindex="7" class="form-control" ng-click="populatejobtypes(editJob.company)" required>
+                                                    <option ng-repeat="x in jobtypes" value="{{x.jobtypeid}}">{{x.jobtypename}}</option>
+                                                </select>
+                                                <span class="error-message"
+                                                      ng-show="addJobForm.jobtype.$dirty && addJobForm.jobtype.$error.required">Please select jobtype</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <!--<select ng-model="addJob.location" class="form-control" tabindex="3"
+                                                        >
+                                                    <option value="{{locations[0].location}}" >{{locations[0].locationname}}</option>
+                                                    &lt;!&ndash;<option ng-repeat="loc in locations" value="{{loc.location}}">
+                                                        {{loc.locationname}}&ndash;&gt;
+                                                    </option>
+                                                </select>-->
+                                                <input type="text"  ng-init="populatelocationbyid(editJob.location)"  value = "{{locations[0].locationname}}" readonly="">
+                                            </div>
                                         </div>
 
-                                      <div class="col-sm-6">
-                                        <div class="form-group" ng-controller="jobtypecrtljob">
-                                            <select ng-init = "populatejobtypesbyid(editJob.jobtype)" ng-model="editJob.jobtype" name="jobtype" tabindex="8" class="form-control" ng-click="populatejobtypes(editJob.company)" required>
-                                                <option ng-repeat="x in jobtypes" value="{{x.jobtypeid}}">{{x.jobtypename}}</option>
-                                            </select>
-                                            <!--<span class="error-message" ng-show="editJobForm.jobtype.$dirty && editJobForm.jobtype.$error.required">Please enter uniform type</span>-->
-                                        </div>
-                                      </div>
-
-                                    <div class="col-sm-6" >
-                                        <div class="form-group">
-                                            <select ng-init = "populatelocationbyid(editJob.location)" ng-model="editJob.location" name="jobtype" tabindex="3" class="form-control" ng-click="populatelocation(editJob.company)" required>
-                                                <option ng-repeat="x in locations" value="{{x.locationid}}">{{x.locationname}}</option>
-                                            </select>
-                                            <!--<span class="error-message" ng-show="editJobForm.jobtype.$dirty && editJobForm.jobtype.$error.required">Please enter uniform type</span>-->
-                                            <!--  <input type="text" name="inv" id="inv" tabindex="9" class="form-control" placeholder="Enter Invoice" value="{{editJob.inv}}" ng-model="editJob.inv" required>
-                                              <span class="error-message" ng-show="editJobForm.inv.$dirty && editJobForm.inv.$error.required">Enter Invoice</span>-->
-                                        </div>
                                     </div>
                                 </div>
-                                    <div class="form-group" ng-controller="lpocrtljob">                                     
-                                         <select ng-init="populatelpobynum(editJob.po)" ng-model="editJob.po" class="form-control" ng-click="populatelpos(editJob.company)" tabindex="7">
-                                              <option value="" disabled selected> Select LPO </option>
-                                              <option ng-repeat="x in lpos" value="{{x.lponum}}">{{x.lponum}}</option>
-                                      </select>  
-                                    </div>   
-
-                                 
-                                    <input type="hidden" name="jobid" id="jobid" value="{{editJob.jobid}}" ng-model="editJob.jobid" />
-                                                                    
-                                                             
                             </div>
                         </div>
                         <div class="divider"></div>
@@ -302,23 +284,6 @@
                              
                         </div> 
                         <div class="row vertical-divider">
-                            <!--<div class="col-sm-4">
-                                     <div class="form-group"> 
-                                            <label> Others </label>
-                                            <select name="dressid" ng-model="editJob.others" ng-init="editJob.others = '0'" class="form-control" tabindex="39">                                                
-                                                <option value="7" selected>Tie</option>
-                                                <option value="8">Belt</option>
-                                                <option value="9">Bow</option>
-                                                <option value="10">Cap</option>
-                                            </select>   
-                                     </div> 
-                            </div>
-                            <div class="col-sm-4">
-                                    <div class="form-group">
-                                      <label> Qty </label> 
-                                          <input type="text" name="qty[4]" placeholder="Qty" class="form-control" value="0" ng-model="editJob.qty4" ng-init="editJob.qty4 = ''" tabindex="40">  
-                                    </div>
-                            </div> -->
                             <div class="col-sm-1">
                                 <div class="form-group">
                                     <label> Tie </label>
@@ -381,7 +346,7 @@
 
                         <div class="row">
                            <div class="col-sm-4 col-offset-sm-2">
-                            <button class="red" ng-click="doeditJob(editJob)" tabindex="41" >UPDATE</button>
+                            <button class="red" ng-click="doeditJob(editJob)" tabindex="51" >UPDATE</button>
                            </div> 
                         </div> 
                       </form>         

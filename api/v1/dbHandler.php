@@ -115,8 +115,9 @@ class DbHandler {
 
     public function getAllLPO($company) {
 
-        $query1 = "SELECT lponum , (shirts + trousers + jackets + tshirt + skirt + coat + tie + belt + bow + cap) AS total from lpo where companyid = $company ";
+        $query1 = "SELECT lponum , SUM(qty) AS total, jobtype, location from lpo where companyid = $company  GROUP by lponum";
         $r1 = $this->conn->query($query1) or die($this->conn->error.__LINE__);
+        $result = null;
         while($row1 = $r1->fetch_assoc())
         {
             $lponum = $row1['lponum'];

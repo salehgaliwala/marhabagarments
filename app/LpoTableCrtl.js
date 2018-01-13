@@ -1,24 +1,56 @@
 app.controller('lpoCtrl', function($scope, Data) {  
     
             Data.get('/lpo').then(function (results) {
-           //alert(JSON.stringify(results));        
-              $scope.allItems =results;              
+           // alert(JSON.stringify(results));
+
+
+                $scope.allItems =lpoTableCal(results);
               $scope.resetAll(); 
-        }); 
-        
-    $scope.doDellpo = function (id) {
+        });
+
+
+    lpoTableCal = function (results) {
+
+
+        var allItems = [],i,j;
+
+        for(j = 0,i= 0 ; j < results.length;i++) {
+
+
+            allItems.push({lponum: results[j].lponum, companyname: results[j].companyname, location: results[j].location , Total : 0});
+
+            while(allItems[i].lponum === results[j].lponum){
+
+                if(typeof allItems[i][results[j].dressname] === 'undefined')
+                allItems[i][results[j].dressname] = 0;
+
+                allItems[i][results[j].dressname] += parseInt(results[j].qty);
+                allItems[i]['Total'] +=  parseInt(results[j].qty);
+
+                if(++j > results.length-1)
+                    break;
+
+            }
+        }
+
+        return allItems;
+    }
+
+
+    $scope.doDellpo = function (lponum) {
         
         Data.post('dellpo', {
-            id:id
+            lponum:lponum
         }).then(function (results) {           
             
             if (results == "success") {
                 alert('LPO Deleted');
                 //$location.path('job');
                   Data.get('/lpo').then(function (results) {
-            //alert(JSON.stringify(results));        
-              $scope.allItems =results;              
-              $scope.resetAll(); 
+            //alert(JSON.stringify(results));
+
+              $scope.allItems =lpoTableCal(results);
+              $scope.resetAll();
                }); 
             }
         });

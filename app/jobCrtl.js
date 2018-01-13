@@ -2,16 +2,16 @@ app.controller('EditJobControler',[
   '$scope','$http','$location','$routeParams',
   function ($scope, $http, $location, $routeParams) {
       var id = $routeParams.id;
-      var obj = {};     
+      var obj = {};
+
+
       $http.get('api/v1/editjob/'+id).then(function(results) {
-            //alert(JSON.stringify(results));
+            // alert(JSON.stringify(results));
            obj.get = results.data;
            $scope.editJobs = obj;
- 
+
   });
       
-      
-
 
   $scope.doeditJob = function (customer) {
        // alert(JSON.stringify(customer));
@@ -54,7 +54,16 @@ app.controller('companycrtl',[
         });   
       };
 
-        //Added new
+       $scope.populatejobtypesbyid = function(jobtypeid) {
+           var obj = {};
+           $http.get('api/v1/populatejobtypesbyid/'+jobtypeid).then(function(results) {
+               //alert(JSON.stringify(results));
+               obj.get = results.data;
+               $scope.jobtypes = results.data;
+           });
+       };
+
+       //Added new
        $scope.populatelocation = function(companyid) {
            var obj = {};
            $http.get('api/v1/populatelocation/'+companyid).then(function(results) {
@@ -73,6 +82,19 @@ app.controller('companycrtl',[
                $scope.locations = results.data;
            });
        };
+
+       $scope.populateLocationJobtypebylpo = function (lponum) {
+
+           $http.get('api/v1/populatelocationjobtypebylponum/' + lponum).then(function (results) {
+
+               $scope.jobtypes = results.data;
+               $scope.locations = results.data;
+               if(typeof $scope.locations[0].location !== 'undefined')
+               $scope.addJob.location = $scope.locations[0].location;
+
+           });
+       }
+
 
 
    }

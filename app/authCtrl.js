@@ -59,7 +59,7 @@ app.controller('authCtrl', function ($scope, $rootScope, $routeParams, $location
             $location.path('addjobtype');
       };
      $scope.doAddjob = function (customer) {
-        //alert(JSON.stringify(customer));
+        // alert(JSON.stringify(customer));
 
         Data.post('addjob', {
             customer: customer

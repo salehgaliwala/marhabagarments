@@ -60,28 +60,28 @@
          <tr ng-repeat="item in filteredList | orderBy:columnToOrder:reverse">
              <td>{{item.lponum}}</td>
              <td>{{item.companyname}}</td>
-             <td>{{item.shirts}}</td>
-             <td>{{item.trousers}}</td>
-             <td>{{item.jackets}}</td>
-             <td>{{item.tshirt}}</td>
-             <td>{{item.cargo_pants}}</td>
-             <td>{{item.skirt}}</td>
-             <td>{{item.coat}}</td>
-             <td>{{item.waist}}</td>
+             <td>{{item.Shirt}}</td>
+             <td>{{item.Trouser}}</td>
+             <td>{{item.Jacket}}</td>
+             <td>{{item.Tshirt}}</td>
+             <td>{{item.Cargo_pants}}</td>
+             <td>{{item.Skirt}}</td>
+             <td>{{item.Coat}}</td>
+             <td>{{item.Waist}}</td>
              <!--<td>{{item.others}}</td>-->
-             <td>{{item.tie}}</td>
-             <td>{{item.belt}}</td>
-             <td>{{item.bow}}</td>
-             <td>{{item.cap}}</td>
-             <td>{{item.scarf}}</td>
-             <td>{{item.apron}}</td>
-             <td>{{item.coverall}}</td>
-             <td>{{item.shoes}}</td>
-             <td>{{item.other}}</td>
-             <td>{{item.total}}</td>
+             <td>{{item.Tie}}</td>
+             <td>{{item.Belt}}</td>
+             <td>{{item.Bow}}</td>
+             <td>{{item.Cap}}</td>
+             <td>{{item.Scarf}}</td>
+             <td>{{item.Apron}}</td>
+             <td>{{item.Coverall}}</td>
+             <td>{{item.Shoes}}</td>
+             <td>{{item.Other}}</td>
+             <td>{{item.Total}}</td>
           
              <td><a href="#!/editlpo/{{item.lponum}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
-             <td ng-click="doDellpo(item.id)"><i class="fa fa-trash-o" aria-hidden="true"></i></td>
+             <td ng-click="doDellpo(item.lponum)"><i class="fa fa-trash-o" aria-hidden="true"></i></td>
          </tr>
      </tbody>
   </table>        

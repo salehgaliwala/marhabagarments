@@ -8,7 +8,7 @@
                 </div>
            </div>   
 <div class="page-content">
-    <div class="row" ng-controller="lpoAddEditCtrl">
+    <div class="row" ng-controller="lpoAddEditCtrl" ng-init="getlpo()">
         <div class="space-6"></div>
         <div class="col-sm-12">
             <div id="login-box" class="login-box visible widget-box no-border">
@@ -18,26 +18,6 @@
                           Add LPO
                         </h4>
                         <br/>
-                        <!--<form name="lpoForm" class="" role="form" ng-repeat="lpo in editlpos">
-                            <div class="form-group">
-                                    <label class="col-sm-5 control-label no-padding-right" for="lponumber">LPO Number</label>
-                                    <div class="col-sm-7">
-                                        <span class="block input-icon input-icon-right">
-                                            <input type="text" class="form-control" placeholder="LPO Number" name="lponumber" ng-model="lpo.lponum" focus/>
-                                        </span>
-                                    </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-5 control-label no-padding-right" for="companyname">Company Name</label>
-                                <div class="col-sm-7"  ng-controller="companycrtl">
-                                    <span class="block input-icon input-icon-right">
-                                        <select ng-model="lpo.companyid" class="form-control">
-                                        <option value="" disabled selected> Select Company </option>                                                
-                                         <option ng-repeat="x in companies" value="{{x.companyid}}">{{x.companyname}}</option>
-                                    </select>   
-                                    </span>
-                                </div>
-                            </div>-->
                             <form name="lpoForm" class="" role="form" >
                                 <div class="row" >
                                     <div class="col-sm-3 col-offset-sm-1">
@@ -50,7 +30,7 @@
                                     <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="companyname">Company Name</label>
-                                            <select ng-model="lpo[0].companyid" class="form-control"   data-ng-init="populatecompany()" ng-change="populatejobtypes(lpo[0].companyid);populatelocation(lpo[0].companyid);">
+                                            <select ng-model="lpo[0].companyid" class="form-control"   data-ng-init="populatecompany();"  ng-change="populatejobtypes(lpo[0].companyid);populatelocation(lpo[0].companyid);">
                                                 <option value="" disabled selected> Select Company </option>
                                                 <option ng-repeat="comp in companies" value="{{comp.companyid}}">{{comp.companyname}}</option>
                                             </select>
@@ -59,7 +39,7 @@
                                     <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="location">Location</label>
-                                            <select ng-model="lpo[0].location" class="form-control" ng-click="populatelocation(lpo[0].companyid)" ng-init="populatelocation(lpo[0].companyid)">
+                                            <select ng-model="lpo[0].location" class="form-control" >
                                                 <option value="" disabled selected>Select Location</option>
                                                 <option ng-repeat="loc in locations" value="{{loc.locationid}}">{{loc.locationname}}</option>
                                             </select>
@@ -67,17 +47,17 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div ng-app="angularjs-starter">
+                                    <div ng-app="angularjs-starter" ng-init="initDelay()">
                                         <fieldset data-ng-repeat="dress in dresses" class="row">
                                             <div class="col-sm-2 col-sm-offset-1">
-                                                <select ng-model="dress.dressid" class="form-control" data-ng-init="populatedress();">
+                                                <select ng-model="dress.dressid" class="form-control" required>
                                                     <option value="" selected disabled>Select a Dress</option>
                                                     <option ng-repeat="x in dresslist" value="{{x.dressid}}">{{x.dressname}}</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-3">
                                                 <div class="form-group">
-                                                    <select ng-model="dress.jobtype" class="form-control" data-ng-init="populatejobtypes(lpo[0].companyid)">
+                                                    <select ng-model="dress.jobtype" class="form-control" >
                                                         <option value="" disabled selected> Select Job Types</option>
                                                         <option ng-repeat="x in jobtypes" value="{{x.jobtypeid}}">
                                                             {{x.jobtypename}}
@@ -87,7 +67,7 @@
                                             </div>
                                             <div class="col-sm-2">
                                                 <input type="text" class="form-control  dress-input" placeholder="Qty"
-                                                       name="lponumber" ng-model="dress.qty" focus/>
+                                                       name="lponumber" ng-model="dress.qty" required focus/>
                                                 <button class="remove" ng-show="$last" ng-click="removeChoice()" style="
                                                                                                                     background: #C76868;
                                                                                                                     color: #FFF;
@@ -105,91 +85,8 @@
                                                 </button>
                                             </div>
                                         </fieldset>
-                                        </div>
                                     </div>
                                 </div>
-                            <!--<div class="form-group">
-                                <label class="col-sm-5 control-label no-padding-right" for="shirts">Shirts</label>
-                                <div class="col-sm-7">
-                                    <span class="block input-icon input-icon-right">
-                                        <input type="text" class="form-control" placeholder="Shirts" name="lponumber" ng-model="lpo.shirts" focus/>                                         
-                                    </span>
-                                </div>
-                            </div>                            
-                          
-                            <div class="form-group">
-                                <label class="col-sm-5 control-label no-padding-right" for="trousers">Trousers</label>
-                                <div class="col-sm-7">
-                                    <span class="block input-icon input-icon-right">
-                                        <input type="text" class="form-control" placeholder="trousers" name="trousers" ng-model="lpo.trousers" focus/>                                         
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-5 control-label no-padding-right" for="jackets">Jackets</label>
-                                <div class="col-sm-7">
-                                    <span class="block input-icon input-icon-right">
-                                        <input type="text" class="form-control" placeholder="jackets" name="jackets" ng-model="lpo.jackets" focus/>                                         
-                                    </span>
-                                </div>
-                            </div>
-                             <div class="form-group">
-                                <label class="col-sm-5 control-label no-padding-right" for="tshirt">T-shirt</label>
-                                <div class="col-sm-7">
-                                    <span class="block input-icon input-icon-right">
-                                        <input type="text" class="form-control" placeholder="tshirt" name="tshirt" ng-model="lpo.tshirt" focus/>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-5 control-label no-padding-right" for="skirt">Skirt</label>
-                                <div class="col-sm-7">
-                                    <span class="block input-icon input-icon-right">
-                                        <input type="text" class="form-control" placeholder="skirt" name="skirt" ng-model="lpo.skirt" focus/>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-5 control-label no-padding-right" for="coat">Coat</label>
-                                <div class="col-sm-7">
-                                    <span class="block input-icon input-icon-right">
-                                        <input type="text" class="form-control" placeholder="coat" name="coat" ng-model="lpo.coat" focus/>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-5 control-label no-padding-right" for="tie">Tie</label>
-                                <div class="col-sm-7">
-                                    <span class="block input-icon input-icon-right">
-                                        <input type="text" class="form-control" placeholder="tie" name="tie" ng-model="lpo.tie" focus/>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-5 control-label no-padding-right" for="belt">Belt</label>
-                                <div class="col-sm-7">
-                                    <span class="block input-icon input-icon-right">
-                                        <input type="text" class="form-control" placeholder="belt" name="belt" ng-model="lpo.belt" focus/>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-5 control-label no-padding-right" for="bow">Bow</label>
-                                <div class="col-sm-7">
-                                    <span class="block input-icon input-icon-right">
-                                        <input type="text" class="form-control" placeholder="bow" name="bow" ng-model="lpo.bow" focus/>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-5 control-label no-padding-right" for="cap">Cap</label>
-                                <div class="col-sm-7">
-                                    <span class="block input-icon input-icon-right">
-                                        <input type="text" class="form-control" placeholder="cap" name="cap" ng-model="lpo.cap" focus/>
-                                    </span>
-                                </div>
-                            </div>-->
                                 <div class="row">
                                     <br/>
                                     <div class="col-sm-2 col-sm-offset-3">
@@ -205,7 +102,8 @@
                                     </div>
                                 </div>
                                 <!--</fieldset>-->
-                        </form>
+                             </form>
+                    <div class="row" style="padding-bottom: 100px"></div>
                     </div>
                 </div>
             </div>

@@ -2,6 +2,7 @@ app.controller('lpoAddEditCtrl', function ($scope, $rootScope, $routeParams, $lo
 
     $scope.doAddLpo = function (lpo,dress) {
         // alert(JSON.stringify(customer));
+        // alert(JSON.stringify(dress));
         // alert(JSON.stringify(lpo));
         Data.post('addlpo', {
             lpo: lpo, dress :dress
@@ -32,7 +33,9 @@ app.controller('lpoAddEditCtrl', function ($scope, $rootScope, $routeParams, $lo
         $scope.lpo = results.data;
 
         var temp = results.data;
-        $scope.plponum = temp[0].lponum;
+        if(typeof temp[0].lponum !== 'undefined')
+        $scope.plponum = temp[0].lponum ;
+
         for(i=0 ; i < temp.length ;i++){
             $scope.dresses.push({'id': 'dress' + i,'dressid': temp[i].dressid ,'jobtype' : temp[i].jobtype , 'qty' : temp[i].qty, 'lpoid': temp[i].id});
             }
@@ -66,6 +69,7 @@ app.controller('lpoAddEditCtrl', function ($scope, $rootScope, $routeParams, $lo
         var lastItem = $scope.dresses.length - 1;
         $scope.dresses.splice(lastItem);
     };
+
     // Dress id lpo end
 
     $scope.populatecompany = function () {
@@ -89,6 +93,7 @@ app.controller('lpoAddEditCtrl', function ($scope, $rootScope, $routeParams, $lo
     };
     //Added new
     $scope.populatelocation = function(companyid) {
+
         var obj3 = {};
         $http.get('api/v1/populatelocation/'+companyid).then(function(results) {
             // alert(JSON.stringify(results));
@@ -118,4 +123,12 @@ app.controller('lpoAddEditCtrl', function ($scope, $rootScope, $routeParams, $lo
             // alert(JSON.stringify($scope.locations));
         });
     };
+
+    $scope.initDelay = function () {
+        window.setTimeout(function() {
+            $scope.populatedress();
+            $scope.populatelocation($scope.lpo[0].companyid)
+            $scope.populatejobtypes($scope.lpo[0].companyid);
+        }, 100);
+    }
 });
