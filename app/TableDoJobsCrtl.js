@@ -18,7 +18,7 @@ $scope.search = function()
         $scope.filteredList  = _.filter($scope.allItems,
                  function(item){  
                   
-                     return searchUtil(item,$scope.searchText); 
+                     return searchUtil(item,$scope.searchLocation,$scope.searchCompany);
                  });
         
         if($scope.searchText == '')
@@ -30,22 +30,11 @@ $scope.search = function()
    
  });
 
- /* Search Text in all 3 fields */
-function searchUtil(item,toSearch)
+ /* Search Text in 2 fields */
+function searchUtil(item,toSearchLocation,toSearchCompany)
 {
-    /* Search Text in all 3 fields */
+    /* Search Text in 2 fields */
 
-    return ( item.companyname.toLowerCase().indexOf(toSearch.toLowerCase()) > -1)                              
+    return ( item.locationname.toLowerCase() === toSearchLocation.toLowerCase()  && item.company.toLowerCase() === toSearchCompany.toLowerCase())
                      ? true : false ;
 }
-
-
-     function getDummyData()
-{
-return [
- {JobId:2, company:'Jitendra', name: 'jz@gmail.com'},
- {JobId:1, company:'Minal', name: 'amz@gmail.com'},
- {JobId:3, company:'Rudra', name: 'ruz@gmail.com'} 
-];
-}
-    

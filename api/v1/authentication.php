@@ -96,12 +96,20 @@ $app->get('/dojobs', function() {
     $response = array();
     $response= $db->getAllRecord("SELECT
                                     jobs.jobid,
+                                    jobs.slipno,
                                     jobs.name,
                                     jobs.status,
-                                    company.companyname
+                                    jobs.company,
+                                    company.companyname,
+                                    location.locationname,
+                                    jobs.po,
+                                    jobtype.jobtypename
                                     FROM
                                     jobs
-                                    Inner Join company ON jobs.company = company.companyid where jobs.isdelete = 'N' and status != 'Delivered'");
+                                    Inner Join company ON jobs.company = company.companyid
+                                    Inner Join location ON jobs.location = location.locationid
+                                    Inner Join jobtype ON jobs.jobtype = jobtype.jobtypeid
+                                    where jobs.isdelete = 'N' and status = 'Complete'");
   
      echoResponse(200, $response);
 });
@@ -1174,7 +1182,7 @@ $response = array();
         $r->customer->jobid = $result;
 
 // adding shirts item
-        if ($r->customer->qty1 != '') {
+        if (!empty($r->customer->qty1)) {
             $tabble_name = "jobitems";
             $column_names = array('jobid', 'dressid', 'qty');
             $r->customer->dressid = $r->customer->dressid1;
@@ -1194,7 +1202,7 @@ $response = array();
 
         }
 // adding trousers item
-        if ($r->customer->qty2 != '') {
+        if (!empty($r->customer->qty2)) {
             $tabble_name = "jobitems";
             $column_names = array('jobid', 'dressid', 'qty');
             $r->customer->dressid = $r->customer->dressid2;
@@ -1212,7 +1220,7 @@ $response = array();
 
         }
 // adding jackets item
-        if ($r->customer->qty3 != '') {
+        if (!empty($r->customer->qty3)) {
             $tabble_name = "jobitems";
             $column_names = array('jobid', 'dressid', 'qty');
             $r->customer->dressid = $r->customer->dressid3;
@@ -1240,63 +1248,63 @@ $response = array();
         }*/
 
 
-        if ($r->customer->qtytie != '') {
+        if (!empty($r->customer->qtytie)) {
             $tabble_name = "jobitems";
             $column_names = array('jobid', 'dressid', 'qty');
             $r->customer->dressid = '7';
             $r->customer->qty = $r->customer->qtytie;
             $result = $db->insertIntoTable($r->customer, $column_names, $tabble_name);
         }
-        if ($r->customer->qtybelt != '') {
+        if (!empty($r->customer->qtybelt)) {
             $tabble_name = "jobitems";
             $column_names = array('jobid', 'dressid', 'qty');
             $r->customer->dressid = '8';
             $r->customer->qty = $r->customer->qtybelt;
             $result = $db->insertIntoTable($r->customer, $column_names, $tabble_name);
         }
-        if ($r->customer->qtybow != '') {
+        if (!empty($r->customer->qtybow)) {
             $tabble_name = "jobitems";
             $column_names = array('jobid', 'dressid', 'qty');
             $r->customer->dressid = '9';
             $r->customer->qty = $r->customer->qtybow;
             $result = $db->insertIntoTable($r->customer, $column_names, $tabble_name);
         }
-        if ($r->customer->qtycap != '') {
+        if (!empty($r->customer->qtycap)) {
             $tabble_name = "jobitems";
             $column_names = array('jobid', 'dressid', 'qty');
             $r->customer->dressid = '10';
             $r->customer->qty = $r->customer->qtycap;
             $result = $db->insertIntoTable($r->customer, $column_names, $tabble_name);
         }
-        if ($r->customer->qtyscarf != '') {
+        if (!empty($r->customer->qtyscarf)) {
             $tabble_name = "jobitems";
             $column_names = array('jobid', 'dressid', 'qty');
             $r->customer->dressid = '11';
             $r->customer->qty = $r->customer->qtyscarf;
             $result = $db->insertIntoTable($r->customer, $column_names, $tabble_name);
         }
-        if ($r->customer->qtyapron != '') {
+        if (!empty($r->customer->qtyapron)) {
             $tabble_name = "jobitems";
             $column_names = array('jobid', 'dressid', 'qty');
             $r->customer->dressid = '12';
             $r->customer->qty = $r->customer->qtyapron;
             $result = $db->insertIntoTable($r->customer, $column_names, $tabble_name);
         }
-        if ($r->customer->qtycoverall != '') {
+        if (!empty($r->customer->qtycoverall)) {
             $tabble_name = "jobitems";
             $column_names = array('jobid', 'dressid', 'qty');
             $r->customer->dressid = '13';
             $r->customer->qty = $r->customer->qtycoverall;
             $result = $db->insertIntoTable($r->customer, $column_names, $tabble_name);
         }
-        if ($r->customer->qtyshoes != '') {
+        if (!empty($r->customer->qtyshoes)) {
             $tabble_name = "jobitems";
             $column_names = array('jobid', 'dressid', 'qty');
             $r->customer->dressid = '14';
             $r->customer->qty = $r->customer->qtyshoes;
             $result = $db->insertIntoTable($r->customer, $column_names, $tabble_name);
         }
-        if ($r->customer->qtyother != '') {
+        if (!empty($r->customer->qtyother)) {
             $tabble_name = "jobitems";
             $column_names = array('jobid', 'dressid', 'qty');
             $r->customer->dressid = '15';
@@ -1498,7 +1506,28 @@ $app->get('/populatelocationjobtypebylponum/:lponum', function($lponum){
 
 });
 
+$app->get('/getdohistory', function(){
+    $db = new DbHandler();
+    $response = array();
+    $response=$db->getAllRecord("
+                              SELECT delorder.doid,delorder.donum,delorder.datecreated,company.companyname,location.locationname
+                              from delorder
+                              INNER JOIN jobs ON jobs.jobid = delorder.jobid
+                              LEFT Join company ON company.companyid = jobs.company 
+                              LEFT JOIN location ON  location.locationid = jobs.location
+                              WHERE delorder.isdelete = 'N' GROUP BY donum");
+    echoResponse(200, $response);
+});
 
+$app->post('/Delhistorydo', function() use ($app) {
+    session_start();
+    $r = json_decode($app->request->getBody());
+    $db = new DbHandler();
+    $response = '';
+    if($_SESSION['role'] == 0)
+        $response=$db->DelRecord("Update delorder SET isdelete = 'Y' where donum = '".$r->donum."'");
+    echoResponse(200, $response);
+});
 
 //Dresses
 

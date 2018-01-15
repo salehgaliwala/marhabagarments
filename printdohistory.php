@@ -97,7 +97,17 @@ if (mysqli_connect_errno())
 </head>
 <?php
 //	 echo $_POST['printdo'][0];
-$jobids = $_POST['printdo'];
+$donum = $_POST['printdo'];
+
+// Extra logic to get jobids
+$select = 'SELECT jobid from delorder WHERE donum = '.'"'.$donum.'"';
+$result = mysqli_query($con, $select);
+$jobids = array();
+while ($row = $result->fetch_assoc()){
+    $jobids.array_push($jobids,$row['jobid']);
+}
+//echo print_r($jobids);
+
 $match = '\'' . implode("','", $jobids) . '\'';
 
 $sql = "SELECT
@@ -129,26 +139,6 @@ if ($result = mysqli_query($con, $sql)) {
     // Free result set
     mysqli_free_result($result);
 }
-
-$donum = date("Ymd").(string)$jobids[0] ;
-
-foreach ($jobids as $jobid)
-{
-    $select  = "SELECT * FROM delorder WHERE jobid = ".$jobid;
-    $exists  = mysqli_query($con, $select);
-    $row_cnt = $exists->num_rows;
-    if($row_cnt)
-    {
-        $insert = 'INSERT INTO delorder (donum ,jobid ) VALUES( "'.$donum.'","'.$jobid.'" )';
-        $flag = mysqli_query($con, $insert);
-    }
-}
-
-if($flag) {
-  $update =   "UPDATE jobs set status = 'Delivered' WHERE  jobid IN ( " . $match . ")";
-  $tmp = mysqli_query($con, $update);
-}
-
 ?>
 
 <body>

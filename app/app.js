@@ -144,6 +144,11 @@ app.config(['$routeProvider',
                     templateUrl: 'partials/editlocation.html',
                     controller: ''
                 })
+            .when('/dohistory/',
+                {
+                    templateUrl: 'partials/dohistory.html',
+                    controller: ''
+                })
             .otherwise({
                 redirectTo: '/login'
             });

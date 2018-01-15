@@ -1,0 +1,48 @@
+<div class="navbar-more-overlay"></div>
+<div id="page-content-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 text-center">
+                <img src="img/logo.jpg" />
+            </div>
+        </div>
+        <div ng-controller="DoCtrl">
+            <div class="row">
+                <div class="col-sm-6 col-lg-offset-3 col-xs-12">
+                    <div class="input-group">
+                        <input class="form-control"   ng-model="doText" placeholder="Search" type="search" ng-change="dosearch()" />
+                        <span class="input-group-addon">
+              <span class="glyphicon glyphicon-search"></span>
+             </span>
+                    </div>
+                </div>
+            </div>
+            <table class="table  table-hover data-table sort display">
+                <thead>
+                <tr>
+                    <th class="doNumber"> <a href="" ng-click="columnToOrder='donumber';reverse=!reverse">Do Number</a></th>
+                    <th class="companyname"> <a href="" ng-click="columnToOrder='companyname';reverse=!reverse"> Company Name</a> </th>
+                    <th class="location"> <a href="" ng-click="columnToOrder='location';reverse=!reverse"> Location </a> </th>
+                    <th class="datecreated"> <a href="" ng-click="columnToOrder='datecreated';reverse=!reverse"> Datecreated </a> </th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr ng-repeat="item in filteredList | orderBy:columnToOrder:reverse">
+                    <td>{{item.donum}}</td>
+                    <td>{{item.companyname}}</td>
+                    <td>{{item.locationname}}</td>
+                    <td>{{item.datecreated}}</td>
+                    <td>
+                        <form action="/printdohistory.php" method="post" target="_blank" novalidate>
+                         <input type="hidden" value="{{item.donum}}" name="printdo" >
+                         <button type="submit" class="btn-primary" >Print</button>
+                        </form>
+                    </td>
+                    <td ng-click="doDelhistorydo(item.donum)"><i class="fa fa-trash-o" aria-hidden="true"></i></td>
+                </tr>
+                </tbody>
+            </table>
+        </div> <!-- Ends Controller -->
+    </div>
+</div>

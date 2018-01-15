@@ -10,31 +10,35 @@
 	                </div>
 	           </div>
 <form action="/printdo.php" method="post" target="_blank" novalidate>           
-<div ng-controller="TableDojobsCtrl" style="margin-top: 40px"> 
-<div class="row"> 
-  <div class="col-sm-6 col-lg-offset-3 col-xs-12">     
-      
-            <div class="form-group" ng-controller="companycrtl" >
-                <select ng-model="$parent.searchText" class="form-control" ng-change="search()">
-                	 <option value="">Select Company</option>	
-                     <option ng-repeat="x in companies" value="{{x.companyname}}">{{x.companyname}}</option>
-                </select>   
-     
+<div ng-controller="TableDojobsCtrl" style="margin-top: 40px">
+    <div class="row" ng-controller="companycrtl">
+        <div class="col-sm-4 col-lg-offset-2 col-xs-12">
+            <div class="form-group">
+                <select ng-model="$parent.searchCompany" class="form-control"  ng-change="populatelocation(searchCompany)">
+                    <option value="">Select Company</option>
+                    <option ng-repeat="x in companies" value="{{x.companyid}}">{{x.companyname}}</option>
+                </select>
             </div>
-            
-  
+        </div>
+        <div class="col-sm-3 col-xs-12">
+            <!--<button class="green" ng-click="goToAddJob()">ADD JOB</button>-->
+            <select ng-model="$parent.searchLocation" class="form-control" ng-change="search()">
+                <option value="" disabled>Select Location</option>
+                <option ng-repeat="x in locations" value="{{x.locationname}}">{{x.locationname}}</option>
+            </select>
+        </div>
     </div>
-     <div class="col-sm-3 col-xs-12">
-        <button class="green" ng-click="goToAddJob()">ADD JOB</button>
-     </div> 
-</div>  
-  <table class="table  table-hover data-table sort display">
+    <table class="table  table-hover data-table sort display">
      <thead>
          <tr><th>&nbsp;</th>
              <th class="JobId"> <a href="" ng-click="columnToOrder='jobid';reverse=!reverse">JobId          
                  </a></th>
+             <th class="slipno"> <a href="" ng-click="columnToOrder='slipno';reverse=!reverse"> Slipno </a> </th>
+             <th class="lpo"> <a href="" ng-click="columnToOrder='lpo';reverse=!reverse"> Lpo </a> </th>
              <th class="name"> <a href="" ng-click="columnToOrder='company';reverse=!reverse"> Company </a> </th>
              <th class="Email"> <a href="" ng-click="columnToOrder='name';reverse=!reverse"> Name </a> </th>
+             <th class="jobtype"> <a href="" ng-click="columnToOrder='jobtype';reverse=!reverse"> Jobtype </a> </th>
+             <th class="location"> <a href="" ng-click="columnToOrder='jobtype';reverse=!reverse"> Location </a> </th>
              <th>Status</th>
              <th>&nbsp;</th>
          </tr>
@@ -44,8 +48,12 @@
          <tr ng-repeat="item in filteredList | orderBy:columnToOrder:reverse">
             <td><input type="checkbox" name="printdo[]" value="{{item.jobid}}"/></td>
              <td>{{item.jobid}}</td>
+             <td>{{item.slipno}}</td>
+             <td>{{item.po}}</td>
              <td>{{item.companyname}}</td>
              <td>{{item.name}}</td>
+             <td>{{item.jobtypename}}</td>
+             <td>{{item.locationname}}</td>
               <td >{{item.status}}</td>
              <td><a href="#!/editjob/{{item.jobid}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
              <td ng-click="doDeljob(item.jobid)"><i class="fa fa-trash-o" aria-hidden="true"></i></td>
