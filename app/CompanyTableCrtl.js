@@ -25,10 +25,29 @@ $scope.companysearch = function()
         {
             $scope.filteredList = $scope.allItems ;
         }
-    }  
-    
-   
- });
+    }
+
+    $scope.doDelcompany = function (id) {
+
+        Data.post('doDelcompany', {
+            id:id
+        }).then(function (results) {
+
+            if (results == "success") {
+                alert('Company Deleted');
+
+                Data.get('/companies').then(function (results) {
+                    //alert(JSON.stringify(results));
+                    $scope.allItems =results;
+                    $scope.resetAll();
+                });
+            }
+        });
+    }
+
+
+
+});
 
  /* Search Text in all 3 fields */
 function companysearchUtil(item,toSearch)

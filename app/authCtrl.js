@@ -74,7 +74,7 @@ app.controller('authCtrl', function ($scope, $rootScope, $routeParams, $location
                 // $location.path('job');
                  $scope.addJob.eid = '';
                  $scope.addJob.name = '';
-                 $scope.addJob.location = '';
+                 // $scope.addJob.location = '';
                  $scope.addJob.dressid1 = ''; 
                  $scope.addJob.dressid2 = ''; 
                  $scope.addJob.dressid3 = ''; 

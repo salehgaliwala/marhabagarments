@@ -129,6 +129,6 @@ app.controller('lpoAddEditCtrl', function ($scope, $rootScope, $routeParams, $lo
             $scope.populatedress();
             $scope.populatelocation($scope.lpo[0].companyid)
             $scope.populatejobtypes($scope.lpo[0].companyid);
-        }, 100);
+        }, 300);
     }
 });

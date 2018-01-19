@@ -18,14 +18,15 @@ $app->get('/job', function() {
                                     location.locationname,
                                     jobs.po,
                                     jobs.eid,
-                                    jobs.jobtype,
+                                    jobtype.jobtypename as jobtype,
                                     jobs.gender,
                                     jobs.datecreated,
                                     company.companyname
                                     FROM
                                     jobs
-                                    Inner Join company ON jobs.company = company.companyid 
-                                    Inner Join location ON jobs.location = location.locationid 
+                                    LEFT Join company ON jobs.company = company.companyid 
+                                    LEFT Join location ON jobs.location = location.locationid 
+                                    LEFT Join jobtype ON jobs.jobtype = jobtype.jobtypeid 
                                     where jobs.isdelete = 'N'");
   
      echoResponse(200, $response);
@@ -714,6 +715,27 @@ $response=$db->DelRecord("Update jobs SET isdelete = 'Y' where jobid = $r->id");
 echoResponse(200, $response);
  });
 
+
+$app->post('/deljobtype', function() use ($app) {
+session_start();
+$r = json_decode($app->request->getBody());
+$db = new DbHandler();
+$response = '';
+if($_SESSION['role'] == 0)
+$response=$db->DelRecord("Update jobtype SET isdelete = 'Y' where jobtypeid = $r->id");
+echoResponse(200, $response);
+ });
+
+$app->post('/doDelcompany', function() use ($app) {
+session_start();
+$r = json_decode($app->request->getBody());
+$db = new DbHandler();
+$response = '';
+if($_SESSION['role'] == 0)
+$response=$db->DelRecord("Update company SET isdelete = 'Y' where companyid = $r->id");
+echoResponse(200, $response);
+ });
+
 $app->post('/dellpo', function() use ($app) {
 session_start();
 $r = json_decode($app->request->getBody());
@@ -963,7 +985,7 @@ function validateLpoQty($customer){
     $results = $db->getAllRecord("select 
                                   lpo.lponum, sum(lpo.qty) as qty, lpo.dressid
                                   from lpo 
-                                  where lponum = '$customer->po' 
+                                  where lponum = '$customer->po' AND jobtype = '$customer->jobtype'
                                   GROUP BY dressid");
 
     $lpo_values = array();
@@ -977,9 +999,9 @@ function validateLpoQty($customer){
 
     //Get all the jobids from previously added jobs
     if(isset($customer->jobid))
-        $previousJobid = $db->getAllRecord("select jobid from jobs where po = '$customer->po' AND company = '$customer->company' AND  jobid NOT LIKE '$customer->jobid'");
+        $previousJobid = $db->getAllRecord("select jobid from jobs where po = '$customer->po' AND company = '$customer->company' AND jobtype = '$customer->jobtype' AND  jobid NOT LIKE '$customer->jobid'");
     else
-    $previousJobid = $db->getAllRecord("select jobid from jobs where po = '$customer->po' AND company = '$customer->company' ");
+    $previousJobid = $db->getAllRecord("select jobid from jobs where po = '$customer->po' AND company = '$customer->company' AND jobtype = '$customer->jobtype'");
 
     $jobIDs = '';
     if(isset($previousJobid))
