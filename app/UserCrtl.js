@@ -32,11 +32,13 @@ app.controller('usercrtl',[
   '$scope','$http','$location','$routeParams',
    function($scope, $http) {
     var obj = {};
+
   $http.get('api/v1/users').then(function(results) {   
          // alert(JSON.stringify(results));        
             obj.get = results.data; 
             $scope.users = results.data;
   });
+
   $scope.setAssignto= function(k,i) {
         $http.post('api/v1/assignuser', {
             id: k,

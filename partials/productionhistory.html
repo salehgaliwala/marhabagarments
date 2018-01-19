@@ -1,0 +1,48 @@
+<div class="navbar-more-overlay"></div>
+<div id="page-content-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 text-center">
+                <img src="img/logo.jpg" />
+            </div>
+        </div>
+        <div ng-controller="ProdCtrl">
+            <div class="row">
+                <div class="col-sm-6 col-lg-offset-3 col-xs-12">
+                    <div class="input-group">
+                        <input class="form-control"   ng-model="doText" placeholder="Search" type="search" ng-change="prodsearch()" />
+                        <span class="input-group-addon">
+              <span class="glyphicon glyphicon-search"></span>
+             </span>
+                    </div>
+                </div>
+            </div>
+            <table class="table  table-hover data-table sort display">
+                <thead>
+                <tr>
+                    <th class="prodNumber"> <a href="" ng-click="columnToOrder='prodNumber';reverse=!reverse">Production Number</a></th>
+                    <th class="companyname"> <a href="" ng-click="columnToOrder='companyname';reverse=!reverse"> Company Name</a> </th>
+                    <th class="location"> <a href="" ng-click="columnToOrder='location';reverse=!reverse"> Location </a> </th>
+                    <th class="datecreated"> <a href="" ng-click="columnToOrder='datecreated';reverse=!reverse"> Datecreated </a> </th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr ng-repeat="item in filteredList | orderBy:columnToOrder:reverse">
+                    <td>{{item.prodnum}}</td>
+                    <td>{{item.companyname}}</td>
+                    <td>{{item.locationname}}</td>
+                    <td>{{item.datecreated}}</td>
+                    <td>
+                        <form action="/printprodsheethistory.php" method="post" target="_blank" novalidate>
+                         <input type="hidden" value="{{item.prodnum}}" name="printprod" >
+                         <button type="submit" class="btn-primary" >Print</button>
+                        </form>
+                    </td>
+                    <td ng-click="doDelhistoryprod(item.prodnum)"><i class="fa fa-trash-o" aria-hidden="true"></i></td>
+                </tr>
+                </tbody>
+            </table>
+        </div> <!-- Ends Controller -->
+    </div>
+</div>

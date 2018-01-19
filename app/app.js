@@ -149,6 +149,16 @@ app.config(['$routeProvider',
                     templateUrl: 'partials/dohistory.html',
                     controller: ''
                 })
+            .when('/production/',
+                {
+                    templateUrl: 'partials/production.html',
+                    controller: ''
+                })
+            .when('/prodhistory/',
+                {
+                    templateUrl: 'partials/productionhistory.html',
+                    controller: ''
+                })
             .otherwise({
                 redirectTo: '/login'
             });

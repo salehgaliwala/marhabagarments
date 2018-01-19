@@ -48,7 +48,7 @@
               <td>{{item.jobtype}}</td>
              <td>{{item.dressname}}</td>
              <td>{{item.qty}}</td>
-             <td ng-controller="usercrtl"> <select class="form-control" ng-model="item.assignto" ng-change="setAssignto(item.assignto,item.jobitemid)" >
+             <td> <select class="form-control" ng-model="item.assignto" ng-change="setAssignto(item.assignto,item.jobitemid)">
                                          <option ng-repeat="x in users" value="{{x.uid}}">{{x.username}}</option>
                                     </select></td>
              <td ng-controller="queuestatuscrtl"><select class="form-control" ng-model="item.status" ng-change="setItemStatus(item.status,item.jobitemid)" >

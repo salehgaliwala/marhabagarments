@@ -1,4 +1,4 @@
-app.controller('QueueCtrl', function($scope, Data) {  
+app.controller('QueueCtrl', function($scope, Data , $http) {
     
             Data.get('/queue').then(function (results) {
            //alert(JSON.stringify(results));        
@@ -25,7 +25,40 @@ $scope.queuesearch = function()
         {
                 $scope.filteredList = $scope.allItems ;
         }
-    }  
+    }
+
+
+    //Optimization Code to reduce /users call
+
+    var obj = {};
+
+        $http.get('api/v1/users').then(function (results) {
+            // alert(JSON.stringify(results));
+            obj.get = results.data;
+            $scope.users = results.data;
+        });
+
+
+
+
+    $scope.setAssignto= function(k,i) {
+        $http.post('api/v1/assignuser', {
+            id: k,
+            itemid : i
+        }).then(function (results) {
+            //alert(JSON.stringify(results));
+            //Data.toast(results);
+            // $scope.companies = results;
+            if (results.data.status == "success") {
+                $scope.messages = 'User Saved';
+
+
+            }
+        });
+    };
+    //your code here for storing in db
+
+    $scope.x = 'ABC';
     
    
  });

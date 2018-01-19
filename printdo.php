@@ -137,7 +137,7 @@ foreach ($jobids as $jobid)
     $select  = "SELECT * FROM delorder WHERE jobid = ".$jobid;
     $exists  = mysqli_query($con, $select);
     $row_cnt = $exists->num_rows;
-    if($row_cnt)
+    if(!$row_cnt)
     {
         $insert = 'INSERT INTO delorder (donum ,jobid ) VALUES( "'.$donum.'","'.$jobid.'" )';
         $flag = mysqli_query($con, $insert);

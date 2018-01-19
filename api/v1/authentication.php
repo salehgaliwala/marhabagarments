@@ -1510,7 +1510,7 @@ $app->get('/getdohistory', function(){
     $db = new DbHandler();
     $response = array();
     $response=$db->getAllRecord("
-                              SELECT delorder.doid,delorder.donum,delorder.datecreated,company.companyname,location.locationname
+                              SELECT delorder.doid,delorder.donum,DATE_FORMAT(delorder.datecreated,'%d/%m/%Y') as datecreated,company.companyname,location.locationname
                               from delorder
                               INNER JOIN jobs ON jobs.jobid = delorder.jobid
                               LEFT Join company ON company.companyid = jobs.company 
@@ -1528,6 +1528,60 @@ $app->post('/Delhistorydo', function() use ($app) {
         $response=$db->DelRecord("Update delorder SET isdelete = 'Y' where donum = '".$r->donum."'");
     echoResponse(200, $response);
 });
+
+$app->get('/production', function() {
+    $db = new DbHandler();
+    $response = array();
+    $response= $db->getAllRecord("SELECT
+                                    jobs.jobid,
+                                    jobs.slipno,
+                                    jobs.name,
+                                    jobs.status,
+                                    jobs.company,
+                                    jobs.eid,
+                                    DATE_FORMAT(jobs.datecreated,'%d/%m/%Y') as date,
+                                    company.companyname,
+                                    jobs.po,
+                                    jobtype.jobtypename,
+                                    jobitems.qty,
+                                    dresses.dressname,
+                                    location.locationname
+                                    FROM
+                                    jobs
+                                    Inner Join company ON jobs.company = company.companyid
+                                    Inner Join jobtype ON jobs.jobtype = jobtype.jobtypeid
+                                    LEFT Join jobitems ON jobitems.jobid = jobs.jobid
+                                    LEFT  Join dresses ON dresses.dressid = jobitems.dressid
+                                    LEFT  JOIN location ON jobs.location = location.locationid
+                                    where jobs.isdelete = 'N' and jobs.status = 'Pending'");
+
+    echoResponse(200, $response);
+});
+
+$app->get('/getprodhistory', function(){
+    $db = new DbHandler();
+    $response = array();
+    $response=$db->getAllRecord("
+                              SELECT production.proid,production.prodnum,DATE_FORMAT(production.datecreated,'%d/%m/%Y') as datecreated,company.companyname,location.locationname
+                              from production
+                              INNER JOIN jobs ON jobs.jobid = production.jobid
+                              LEFT Join company ON company.companyid = jobs.company 
+                              LEFT JOIN location ON  location.locationid = jobs.location
+                              WHERE production.isdelete = 'N' GROUP BY prodnum");
+    echoResponse(200, $response);
+});
+
+$app->post('/Delhistoryprod', function() use ($app) {
+    session_start();
+    $r = json_decode($app->request->getBody());
+    $db = new DbHandler();
+    $response = '';
+    if($_SESSION['role'] == 0)
+        $response = $db->DelRecord("Update production SET isdelete = 'Y' where prodnum = '".$r->prodnum."'");
+    echoResponse(200, $response);
+});
+
+
 
 //Dresses
 

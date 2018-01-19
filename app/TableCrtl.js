@@ -1,4 +1,4 @@
-app.controller('TableCtrl', function($scope, Data) {  
+app.controller('JobTableCtrl', function($scope, Data) {
     
             Data.get('/job').then(function (results) {
            //alert(JSON.stringify(results));        
@@ -30,33 +30,34 @@ app.controller('TableCtrl', function($scope, Data) {
         
      }
 
-$scope.search = function()
+$scope.searchJob = function()
     { 
 
         $scope.filteredList  = _.filter($scope.allItems,
                  function(item){  
                   
-                     return searchUtil(item,$scope.searchText); 
+                     return jobsearchUtil(item,$scope.searchText);
                  });
         
         if($scope.searchText == '')
         {
             $scope.filteredList = $scope.allItems ;
         }
-    }  
-    
-   
- });
+    }
 
- /* Search Text in all 3 fields */
-function searchUtil(item,toSearch)
-{
     /* Search Text in all 3 fields */
+    function jobsearchUtil(item,toSearch)
+    {
+        /* Search Text in all 3 fields */
+        return ( item.name.toLowerCase().indexOf(toSearch.toLowerCase()) > -1
+                 || item.companyname.toLowerCase().indexOf(toSearch.toLowerCase()) > -1
+                 || item.jobid == toSearch
+        )
+            ? true : false ;
+    }
 
-    return ( item.name.toLowerCase().indexOf(toSearch.toLowerCase()) > -1 || item.companyname.toLowerCase().indexOf(toSearch.toLowerCase()) > -1 || item.jobid == toSearch
-                            )                              
-                     ? true : false ;
-}
+});
+
 
 
      function getDummyData()
