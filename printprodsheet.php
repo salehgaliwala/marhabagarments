@@ -138,6 +138,7 @@ $sql = "SELECT
                                     DATE_FORMAT(jobs.datecreated,'%d/%m/%Y') as date,
                                     jobtype.jobtypename,
                                     company.companyname,
+                                    company.companyaddress,
                                     jobitems.qty,
                                     dresses.dressname,
                                     location.locationname
@@ -198,7 +199,7 @@ if ($selectJoin = mysqli_query($con, $sql)) {
 
     $rows = mysqli_fetch_all($selectJoin,MYSQLI_ASSOC);
     $companyname = $rows[0]['companyname'];
-    $companyaddress = $rows[0]['locationname'];
+    $companyaddress = $rows[0]['companyaddress'];
     
     $data = ProductionTableCal($rows);
 //    print_r($data);

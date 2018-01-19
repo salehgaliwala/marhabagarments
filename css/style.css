@@ -242,3 +242,7 @@ hr.style5 {
 
 .btnReports{background: #E12387;color: #fff;height: 40px;border:none;width: 100%}
 .reports input,.reports select {height: 40px;border: 1px solid #E12387;width: 100%;}
+
+#toast-container{
+	color : red;
+}
