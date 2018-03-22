@@ -58,23 +58,7 @@ $app->get('/lpo', function() {
     $response= $db->getAllRecord("SELECT
                                     lpo.id,
                                     lpo.lponum,
-                                   /* lpo.shirts,
-                                    lpo.trousers,
-                                    lpo.jackets,
-                                    lpo.tshirt,
-                                    lpo.skirt,
-                                    lpo.coat,
-                                    lpo.tie,
-                                    lpo.belt,
-                                    lpo.bow,
-                                    lpo.cap,
-                                    lpo.scarf,
-                                    lpo.apron,
-                                    lpo.coverall,
-                                    lpo.shoes,
-                                    lpo.other,
-                                    lpo.cargo_pants,
-                                    lpo.waist,*/
+                                    TO_BASE64(lpo.lponum) as lpoid,                                   
                                     lpo.companyid,
                                     lpo.jobtype,
                                     lpo.location,
@@ -231,13 +215,13 @@ $app->get('/editcompany/:id', function($companyid){
         echoResponse(200, $response);
 });
 
-$app->get('/editlpo/:lponum', function($lponum){
+$app->get('/editlpo/:lpoid', function($lpoid){
 
   $db = new DbHandler();
         $response = array();
         session_start();
         if($_SESSION['role'] == 0){
-
+        $lponum = base64_decode($lpoid);  
         $response=$db->getAllRecord("select * from lpo where isdelete ='N' and lponum ='$lponum'");
 
 
@@ -1515,7 +1499,7 @@ $app->get('/populatelocationbyid/:locationid', function($locationid){
 });
 
 $app->get('/populatelocationjobtypebylponum/:lponum', function($lponum){
-
+    $lponum = base64_decode($lponum);
     $db = new DbHandler();
     $response = array();
     $response = $db->getAllRecord("SELECT

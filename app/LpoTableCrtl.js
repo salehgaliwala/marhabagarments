@@ -17,7 +17,7 @@ app.controller('lpoCtrl', function($scope, Data) {
         for(j = 0,i= 0 ; j < results.length;i++) {
 
 
-            allItems.push({lponum: results[j].lponum, companyname: results[j].companyname, location: results[j].location , Total : 0});
+            allItems.push({lpoid: results[j].lpoid,lponum: results[j].lponum, companyname: results[j].companyname, location: results[j].location , Total : 0});
 
             while(allItems[i].lponum === results[j].lponum){
 
